@@ -1,0 +1,22 @@
+<section class="card user-reviews padding-small-b">
+    <h2>Armada lainnya dari {{ site.company }}</h2>
+    <ul class="basic-listing-card user-reviews">
+        <amp-carousel type="carousel" height="390" layout="fixed-height">
+            {% for item in site.data-product %}
+            <li class="card card-panel">
+                <a href="{{ item.url }}">
+                    <amp-img src="{{ item.image }}" width="1" height="1" alt="{{ item.nama-produk }}" title="{{ item.nama-produk }}" layout="responsive"></amp-img>
+                </a>
+                <a class="info" href="{{ item.url }}">{{ item.nama-produk }}</a>
+                <ul>
+                    <li>{{ item.durasi }} : {{ item.ket-durasi }}</li>
+                    <li>{{ item.fasilitas }} : {{ item.ket-fasilitas-1 }} {{ item.ket-fasilitas-2 }}</li>
+                    <li>{{ item.rute }} : {{ item.ket-rute }}, {{ item.ex-rute }}</li>
+                </ul>
+                <a class="info" href="{{ item.url }}" title="Harga sewa {{ item.nama-produk }} adalah {{ item.harga }}">{{ item.harga }}</a>
+            </li>
+            {% endfor %}
+        </amp-carousel>
+    </ul>
+    <a class="cta-arrow" href="/harga/" title="Dapatkan berbagai pilihan armada lainnya">Dapatkan berbagai pilihan armada lainnya</a>
+</section>

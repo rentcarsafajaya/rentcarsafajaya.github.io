@@ -1,0 +1,51 @@
+creator: dennyrwa
+lang: id
+locale: id_ID
+themecolor: ffffff
+company: safajaya.com
+siteurl: https://safajaya.com
+icon: /favicon.ico
+logo: /images/logo-safajaya.webp
+alt-logo: Logo of safajaya.com
+twitter:
+facebook:
+instagram:
+youtube:
+copyright: © Copyright <strong>safajaya.com</strong>. <br>All Rights Reserved and All the trademarks are the property of their respective owners
+whatsapp-float-desktop: https://web.whatsapp.com/send?phone=6281234220073&text=Hallo, CS safajaya.com
+whatsapp-float-phone: whatsapp://send?text=Hallo, CS safajaya.com!&phone=+6281234220073
+exclude: [README.md]
+email: cs@safajaya.com
+streetAddress: Jl. Medokan Sawah Timur Gg IV No 74, Kelurahan Medokan Ayu, Kecamatan Rungkut
+postOfficeBoxNumber: 
+addressLocality: Kota Surabaya
+addressRegion: Jawa Timur
+postalCode: 60295
+addressCountry: Indonesia
+telephone: 6281234220073
+telephone-detail: 0812-3422-0073
+telephone2: 6282332217774
+telephone-detail2: 0823-3221-7774
+whatsapp-api: https://api.whatsapp.com/send?text=Hallo%20CS%20safajaya.com%20(Nama)%20(Alamat)%20&phone=6281234220073
+fb_app_id: 648118235958493
+DMCA: 4256f477-047c-4840-891b-f59844f4c606
+place_id : ChIJSdI5tmb71y0RHq1F_d2DJc0
+google-my-bussiness:
+permalink: pretty
+collections:
+  data-slider-desktop:
+    output: true
+  data-slider-mobile:
+    output: true
+  data-product:
+    output: true
+    permalink: /harga/:name/
+  data-client:
+    output: true
+    permalink: /testimoni/:name/
+  data-stok-lama:
+    output: true
+    permalink: /:name/
+  data-artikel:
+    output: true
+    permalink: /:name/

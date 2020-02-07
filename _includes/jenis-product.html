@@ -1,0 +1,68 @@
+<ul class="listing basic-listing-card">
+    <div class="row">
+        {% for item in site.data-product %}
+        <div class="column">
+            <div class="card">
+                <a href="{{ item.url }}">
+                    <div>
+                        <amp-img src="{{ item.image }}" width="1" height="1" alt="{{ item.nama-produk }} " title="{{ item.nama-produk }} " layout="responsive"></amp-img>
+                    </div>
+                </a>
+                <div class="card-panel">
+                    <a class="card-link" href="{{ item.url }}" title="{{ item.nama-produk }}">{{ item.nama-produk }}</a>
+                    <ul>
+                        <li>{{ item.durasi }} : {{ item.ket-durasi }}</li>
+                        <li>{{ item.fasilitas }} : {{ item.ket-fasilitas-1 }} {{ item.ket-fasilitas-2 }}</li>
+                        <li>{{ item.rute }} : {{ item.ket-rute }}, {{ item.ex-rute }}</li>
+                    </ul>
+                    <a href="{{ item.url }}" title="Selengkapnya..."><b>Selengkapnya...</b></a>
+                    <a class="card-link" href="{{ item.url }}" title="{{ item.harga }}">{{ item.harga }}</a>
+                </div>
+                <div class="card-link">
+                    <a class="beli-sekarang" href="https://api.whatsapp.com/send?text=halo%20{{ site.company }}%0ASaya%20mau%20pesan%0AKendaraan%20:%20{{ item.nama-produk }}%0A{{ site.siteurl }}{{ item.url }}%0ANama%20:%20%0AAlamat%20:%20%0ATanggal%20:%20%0ADurasi%20:%20&phone={{ site.telephone }}"><i class="icon-whatsapp"></i> Pesan Sekarang</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <!--Pre-Order-->
+    <!--Berita Terbaru-->
+    <li class="card cr-popular ">
+        <h2>Berita Terbaru</h2>
+        <ul>
+            <amp-carousel height="360" type="carousel" controls>
+                {% for post in site.posts %}
+                <li class="card">
+                    <a href="{{ post.url }}">
+                        <amp-img src="{{ post.image }}" width="3" height="2" alt="{{ post.judul-komentar }}" title="{{ post.judul-komentar }}" layout="responsive"></amp-img>
+                    </a>
+                    <div class="card-panel">
+                        <ul class="basic-listing-card user-reviews">
+                            <a class="heading" href="{{ post.url }}">{{ post.judul-post }}</a>
+                            <span class="rating-small">{{ post.kolom }}</span>
+                            <span class="gr-mrgn-l">{{ post.date | date: "%-d %B %Y"}}</span>
+                            <p class="text-heading gr-mrgn-t"></p>
+                            <span class="hint gr-mrgn-b"></span>
+                        </ul>
+                    </div>
+                </li>
+                {% endfor %}
+            </amp-carousel>
+        </ul>
+        <a class="cta-arrow" href="/blog/" title="Lihat Semua Berita Terbaru">Lihat Semua Berita Terbaru</a>
+    </li>
+    <!--Popular Car Section HTML end-->
+    <amp-state id="brandsIcon">
+        <script type="application/json">
+        {
+            "currentState": "more",
+            "less": {
+                "style": "expanded"
+            },
+            "more": {
+                "style": "collapsed"
+            }
+        }
+        </script>
+    </amp-state>
+</ul>
