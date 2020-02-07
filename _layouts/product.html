@@ -55,7 +55,7 @@
             <!-- breadcrumb End -->
             <div class="read-more brand-content">
                 <div class="collapsed" [class]="brandContent[brandContent.currentState].style">
-                    <p class="info gr-mrgn-t">{{ page.info }} Hanya dengan <a class="theme-link text-accent" href="{{ site.whatsapp-api }}" title="{{ site.company }}">Klik di sini untuk menghubungi via Whatsapp</a>, atau lihat pilihan narahubung lainnya di laman <a class="theme-link text-accent" href="/hubungi-kami/" title="Hubungi Kami">Hubungi Kami</a>.</p>
+                    <p class="info gr-mrgn-t">{{ page.info }} Hanya dengan <a class="theme-link text-accent" href="{{ site.whatsapp-api }}" title="{{ site.company }}">Klik di sini untuk menghubungi via Whatsapp</a>, atau lihat pilihan narahubung lainnya di laman <a class="theme-link text-accent" href="/kontak-kami/" title="Kontak Kami">Kontak Kami</a>.</p>
                 </div>
             </div>
             <button on="tap:AMP.setState({brandContent : {currentState: (brandContent.currentState == 'Tutup' ? 'Baca Selengkapnya' : 'Tutup')}})" [text]=" brandContent.currentState">Baca Selengkapnya</button>
