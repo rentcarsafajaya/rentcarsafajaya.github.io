@@ -1,7 +1,7 @@
 ---
 language: id
 layout: SEO
-title: Rental &amp; Sewa Mobil Surabaya Murah (Mulai Rp200rb/hari)
+title: Rental / Sewa Mobil Surabaya Murah (Mulai Rp200rb/hari)
 description: Hub. 081234-2200-73 Mulai 200rb/hari Tersedia rental mobil di Surabaya&#58; Avanza, Elf Long, Elf Short, Ertiga, HiAce, Innova Grand New, Innova Reborn, Xenia
 keyword: rental mobil surabaya, sewa mobil surabaya, sewa mobil surabaya murah, rental mobil surabaya murah, safajaya, safa jaya, safajaya.com, sewa mobil di surabaya, rental mobil di surabaya
 image: /images/woman-in-the-car.jpg
