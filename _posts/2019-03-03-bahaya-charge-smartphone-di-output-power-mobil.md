@@ -2,7 +2,7 @@
 language: id
 layout: post
 data-key: 1
-image: /wp-content/uploads/2019/03/bahaya-charger-hp.jpg
+image: /images/bahaya-charger-hp.jpg
 nama-penulis: Denny Rakhmad Widi Ashari
 date: 2019-03-03
 modified-date: 2020-02-06
