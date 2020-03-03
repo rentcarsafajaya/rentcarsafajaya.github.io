@@ -1,16 +1,20 @@
 <section class="card user-reviews padding-small-b">
-    <h2>Kata Mereka, {{ site.company }}</h2>
+    <div><h2>Kata Mereka, {{ site.company }}</h2><span class="hint"><a href="https://www.google.com/maps/place/Rental+Sewa+Mobil+Surabaya+Safarentcar/@-7.330326,112.804811,15z/data=!4m5!3m4!1s0x0:0xcd2583ddfd45ad1e!8m2!3d-7.330326!4d112.804811?hl=id-ID">Berdasarkan rating dan ulasan di Google Maps&trade;</a></span></div>
+    <br>
     <ul class="basic-listing-card user-reviews">
         <amp-carousel type="carousel" height="266" controls>
             {% for item in site.data-client %}
-            <li class="card card-panel">
+            <li class="card card-panel" itemprop="review" itemscope itemtype="http://schema.org/Review">
+                <meta itemprop="datePublished" content="{{ item.tanggal-beli }}" />
                 <a class="heading" href="{{ item.url }}">{{ item.judul-komentar }}</a>
-                <span class="rating-small">{{ item.rating }}<i class="icon-star-filled"></i></span>
-                <span class="gr-mrgn-l">{{ item.nama-unit }}</span>
-                <p class="info line-clamp line-clamp-3">{{ item.komentar }}</p>
+                <span class="rating-small" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating" title="{{ site.company }}: {{ item.rating }}/5"><span itemprop="ratingValue" content="{{ item.rating }}"><i class="icon-star-full"></i> {{ item.rating }}</span></span>
+                <span class="gr-mrgn-l" itemprop="itemReviewed">{{ item.nama-unit }}</span>
+                <p class="info line-clamp line-clamp-3" itemprop="reviewBody">{{ item.komentar }}</p>
                 <a href="{{ item.url }}" title="{{ item.judul-komentar }}" class="font16 text-accent">
                     Baca Selengkapnya </a>
-                <p class="text-heading gr-mrgn-t">{{ item.nama-client }}</p>
+                    <div itemprop="author" itemscope itemtype="https://schema.org/Person">
+                        <p class="text-heading gr-mrgn-t" itemprop="name">{{ item.nama-client }}</p>
+                    </div>
                 <span class="hint gr-mrgn-b">{{ item.tanggal-beli | date: "%-d %B %Y" }}</span>
             </li>
             {% endfor %}
