@@ -4,7 +4,7 @@ layout: testimoni-item
 data-key: 4
 image: /images/rental-mobil-surabaya-bersih.png
 nama-client: John Lenon
-nama-unit: Surabaya
+nama-unit: Daihatsu Xenia
 tanggal-beli: 2019-08-17
 judul-komentar: Mobil bersih, tepat waktu sopir ramah
 description: Mobil bersih, tepat waktu sopir ramah, harga bersahabat,  yang sewa pasti kembali  lagi.

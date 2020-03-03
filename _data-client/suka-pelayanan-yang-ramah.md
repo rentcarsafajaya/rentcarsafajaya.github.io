@@ -4,7 +4,7 @@ layout: testimoni-item
 data-key: 4
 image: /images/rental-mobil-surabaya-bersih.png
 nama-client: Yudi Sanjoyo
-nama-unit: Surabaya
+nama-unit: Toyota Innova Reborn
 tanggal-beli: 2019-01-01
 judul-komentar: Safa Jaya mobilnya bagus-bagus dan murah
 description: Safa Jaya mobilnya bagus-bagus dan murah, driver ramah sopan juga pengalaman

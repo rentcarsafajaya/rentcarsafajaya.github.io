@@ -4,7 +4,7 @@ layout: testimoni-item
 data-key: 4
 image: /images/rental-mobil-surabaya-bersih.png
 nama-client: Zakky Zakun
-nama-unit: Surabaya
+nama-unit: Toyota Avanza
 tanggal-beli: 2019-10-27
 judul-komentar: Mobil bersih, nyaman, sopir sopan
 description: Mobil bersih, nyaman, sopir sopan, ramah dan tepat waktu.

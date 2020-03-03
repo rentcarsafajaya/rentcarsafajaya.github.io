@@ -4,7 +4,7 @@ layout: testimoni-item
 data-key: 4
 image: /images/rental-mobil-surabaya-bersih.png
 nama-client: Harrys Go
-nama-unit: Surabaya
+nama-unit: Toyota Hiace
 tanggal-beli: 2019-04-21
 judul-komentar: Sopirnya ramah dan berpengalaman
 description: Sopirnya ramah dan berpengalaman, mobilnya bersih dan baru harganya juga murah
