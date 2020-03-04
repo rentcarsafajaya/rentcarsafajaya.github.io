@@ -7,6 +7,10 @@ title: Rental Mobil Xenia
 keyword: sewa mobil surabaya, sewa mobil surabaya murah, rental mobil surabaya, rental mobil surabaya murah, safajaya, safa jaya, safajaya.com, sewa mobil di surabaya, rental mobil di surabaya
 description: Safa Jaya Melayani Rental / Sewa Mobil Daihatsu Xenia di Surabaya paling Murah dan terpercaya di Jawa timur Hubungi kami Call/WA di 081234220073
 nama-produk: Xenia
+sku: DAIHATSU-XENIA-6-HTM-001
+gtin8: 600120201231
+priceValidUntil: 20201231 
+harga-schema: 375000
 nama-produk-asli: Daihatsu Xenia
 jenis-kendaraan: Mini MPV
 tempat-duduk: 6

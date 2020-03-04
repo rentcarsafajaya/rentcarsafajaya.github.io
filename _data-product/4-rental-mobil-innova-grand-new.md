@@ -7,6 +7,10 @@ title: Rental Mobil Innova Grand New
 keyword: sewa mobil surabaya, sewa mobil surabaya murah, rental mobil surabaya, rental mobil surabaya murah, safajaya, safa jaya, safajaya.com, sewa mobil di surabaya, rental mobil di surabaya
 description: Safa Jaya Melayani Rental Toyota Grand New Innova paling Murah dan terpercaya di Jawa timur Hubungi kami Call/WA di 081234220073
 nama-produk: Innova Grand New
+sku: TOYOTA-INNOVAGN-6-HTM-004
+gtin8: 600420201231
+priceValidUntil: 20201231
+harga-schema: 500000
 nama-produk-asli: Toyota Grand New Innova
 jenis-kendaraan: Compact MPV
 tempat-duduk: 6

@@ -7,6 +7,10 @@ title: Rental Mobil HiAce
 keyword: sewa mobil surabaya, sewa mobil surabaya murah, rental mobil surabaya, rental mobil surabaya murah, safajaya, safa jaya, safajaya.com, sewa mobil di surabaya, rental mobil di surabaya
 description: Safa Jaya Melayani Rental Toyota HiAce di Surabaya paling Murah dan terpercaya di Jawa timur Hubungi kami Call/WA di 081234220073
 nama-produk: HiAce
+sku: TOYOTA-HIACE-13-HTM-007
+gtin8: 600720201231
+priceValidUntil: 20201231 
+harga-schema: 1100000
 nama-produk-asli: Toyota HiAce
 jenis-kendaraan: Mini Bus
 tempat-duduk: 13

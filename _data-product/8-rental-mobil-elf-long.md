@@ -7,6 +7,10 @@ title: Rental Mobil Elf Long
 keyword: sewa mobil surabaya, sewa mobil surabaya murah, rental mobil surabaya, rental mobil surabaya murah, safajaya, safa jaya, safajaya.com, sewa mobil di surabaya, rental mobil di surabaya
 description: Safa Jaya Melayani Rental / Sewa Mobil Isuzu Elf Long di Surabaya paling Murah dan terpercaya di Jawa timur Hubungi kami Call/WA di 081234220073
 nama-produk: Elf Long
+sku: ISUZU-ELFL-16-HTM-008
+gtin8: 600820201231
+priceValidUntil: 20201231 
+harga-schema: 1100000
 nama-produk-asli: Isuzu Elf Long
 jenis-kendaraan: Mini Bus
 tempat-duduk: 16

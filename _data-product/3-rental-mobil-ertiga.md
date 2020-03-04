@@ -7,6 +7,10 @@ title: Rental Mobil Ertiga
 keyword: sewa mobil surabaya, sewa mobil surabaya murah, rental mobil surabaya, rental mobil surabaya murah, safajaya, safa jaya, safajaya.com, sewa mobil di surabaya, rental mobil di surabaya
 description: Safa Jaya Melayani Sewa Mobil Suzuki Ertiga di Surabaya paling Murah dan terpercaya di Jawa timur Hubungi kami Call/WA di 081234220073
 nama-produk: Ertiga
+sku: SUSUKI-ERTIGA-6-HTM-003
+gtin8: 600320201231
+priceValidUntil: 20201231 
+harga-schema: 375000
 nama-produk-asli: Suzuki Ertiga
 jenis-kendaraan: Mini MPV
 tempat-duduk: 6

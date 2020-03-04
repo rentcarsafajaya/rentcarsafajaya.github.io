@@ -7,6 +7,10 @@ title: Rental Mobil Elf Short
 keyword: sewa mobil surabaya, sewa mobil surabaya murah, rental mobil surabaya, rental mobil surabaya murah, safajaya, safa jaya, safajaya.com, sewa mobil di surabaya, rental mobil di surabaya
 description: Safa Jaya Melayani Rental Isuzu Elf Short terpercaya di Jawa timur Hubungi kami Call/WA di 081234220073
 nama-produk: Elf Short
+sku: ISUZU-ELF-13-HTM-007
+gtin8: 600720201231
+priceValidUntil: 20201231 
+harga-schema: 950000
 nama-produk-asli: Isuzu Elf Short
 jenis-kendaraan: Mini Bus
 tempat-duduk: 13
