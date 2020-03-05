@@ -58,27 +58,6 @@
                 <li class="active" title="{{ page.title }}">{{ page.title }}</li>
             </ul>
             <!-- breadcrumb End -->
-            <script type="application/ld+json">
-            {
-              "@context": "http://schema.org/",
-              "@type": "Review",
-              "itemReviewed": {
-                "@type": "RentalCarReservation",
-                "image": "{{ site.url }}{{ page.image }}",
-                "name": "{{ page.nama-unit }}"},
-              "name": "{{ page.nama-client }}",
-              "reviewBody": "{{ page.komentar }}",
-              "reviewRating": {
-              "@type": "Rating",
-              "ratingValue": "{{ page.rating }}",
-              "bestRating": "5",
-              "worstRating": "1"
-              },
-              "datePublished": "{{ page.tanggal-beli }}",
-              "author": {"@type": "Person", "name": ""}
-                  }
-            }
-            </script>
             <br>
             <ul class="listing basic-listing-card">
                 <div class="row">
