@@ -42,7 +42,7 @@
               },{
                 "@type": "ListItem", 
                 "position": 2, 
-                "name": "Harga Sewa",
+                "name": "Testimoni",
                 "item": "{{ site.url }}/testimoni/"  
               },{
                 "@type": "ListItem", 
@@ -58,6 +58,26 @@
                 <li class="active" title="{{ page.title }}">{{ page.title }}</li>
             </ul>
             <!-- breadcrumb End -->
+            <script type="application/ld+json">
+                {
+                  "@context": "https://schema.org/", 
+                    "@type": "Review",
+                    "itemReviewed": "{{ page.nama-unit }}",
+                    "image": "{{ site.url }}{{ page.image }}",
+                    "name": "{{ page.nama-client }}",
+                    "reviewBody": "{{ page.komentar }}",
+                    "reviewRating": {
+                      "@type": "Rating",
+                      "ratingValue": "{{ page.rating }}",
+                      "bestRating": "5",
+                      "worstRating": "1"
+                    },
+                    "datePublished": "{{ page.tanggal-beli }}",
+                    "author": {"@type": "Person", "name": ""}
+                  }
+                  }]
+                }
+            </script>
             <br>
             <ul class="listing basic-listing-card">
                 <div class="row">
@@ -77,7 +97,9 @@
                     </div>
                     <div class="column-post">
                         <div class="card">
-                            <span class="rating-small">{{ page.rating }}<i class="icon-star-filled"></i></span>
+                            <span class="rating-small"><i class="icon-star-full"></i> {{ page.rating }}</span>
+                            <br>
+                            <br>
                             <span class="hint gr-mrgn-b">{{ page.tanggal-beli | date: "%-d %B %Y" }}</span>
                             <p class="info line-clamp line-clamp-3">{{ page.komentar }}</p>
                             <p class="text-heading gr-mrgn-t"> {{ page.nama-client }}</p>
