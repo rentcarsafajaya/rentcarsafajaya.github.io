@@ -27,16 +27,16 @@
 
 <body>
     <amp-analytics type="gtag" data-credentials="include">
-    <script type="application/json">
-    {
-      "vars" : {
-        "gtag_id": "<{{ site.id_pelacakan_ga }}>",
-        "config" : {
-          "<{{ site.id_pelacakan_ga }}>": { "groups": "default" }
+        <script type="application/json">
+        {
+            "vars": {
+                "gtag_id": "{{ site.id_pelacakan_ga }}",
+                "config": {
+                    "{{ site.id_pelacakan_ga }}": { "groups": "default" }
+                }
+            }
         }
-      }
-    }
-    </script>
+        </script>
     </amp-analytics>
     {% include header.html %}
     {% include slider.html %}
@@ -46,21 +46,21 @@
             <br>
             <!-- breadcrumb Start -->
             <script type="application/ld+json">
-                {
-                  "@context": "https://schema.org/", 
-                  "@type": "BreadcrumbList", 
-                  "itemListElement": [{
-                    "@type": "ListItem", 
-                    "position": 1, 
+            {
+                "@context": "https://schema.org/",
+                "@type": "BreadcrumbList",
+                "itemListElement": [{
+                    "@type": "ListItem",
+                    "position": 1,
                     "name": "Home",
-                    "item": "{{ site.url }}"  
-                  },{
-                    "@type": "ListItem", 
-                    "position": 2, 
+                    "item": "{{ site.url }}"
+                }, {
+                    "@type": "ListItem",
+                    "position": 2,
                     "name": "{{ page.title }}",
-                    "item": "{{ site.url }}{{ page.url }}"  
-                  }]
-                }
+                    "item": "{{ site.url }}{{ page.url }}"
+                }]
+            }
             </script>
             <ul class="breadcrumb">
                 <li><a href="/" title="Home">Home</a></li>

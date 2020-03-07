@@ -26,16 +26,16 @@
 
 <body>
     <amp-analytics type="gtag" data-credentials="include">
-    <script type="application/json">
-    {
-      "vars" : {
-        "gtag_id": "<{{ site.id_pelacakan_ga }}>",
-        "config" : {
-          "<{{ site.id_pelacakan_ga }}>": { "groups": "default" }
+        <script type="application/json">
+        {
+            "vars": {
+                "gtag_id": "{{ site.id_pelacakan_ga }}",
+                "config": {
+                    "{{ site.id_pelacakan_ga }}": { "groups": "default" }
+                }
+            }
         }
-      }
-    }
-    </script>
+        </script>
     </amp-analytics>
     {% include header.html %}
     {% include slider.html %}
