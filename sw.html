@@ -7,13 +7,11 @@
     if ('serviceWorker' in navigator) {
         // Use the window load event to keep the page load performant
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/sw.js');
+            navigator.serviceWorker.register('{{ site.url }}/sw.js');
         });
     }
     </script>
-    <noscript>
-        Aktifkan Javascript di browser Anda ...
-    </noscript>
 </head>
-<body></body>
+<body>
+</body>
 </html>
