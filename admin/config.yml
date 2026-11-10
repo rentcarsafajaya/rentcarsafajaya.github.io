@@ -1,0 +1,442 @@
+backend:
+  name: github
+  repo: rentcarsafajaya/rentcarsafajaya.github.io
+  branch: master
+  # Gunakan salah satu opsi auth di bawah:
+  # Opsi 1: Cloudflare Worker OAuth proxy (gratis, direkomendasikan untuk GitHub Pages)
+  # base_url: https://sveltia-cms-auth.YOUR-WORKER.workers.dev
+  # Opsi 2: GitHub PAT — login manual via dialog Sveltia CMS (paling mudah untuk 1 user)
+  # Tidak perlu base_url, cukup masukkan PAT di dialog login
+
+# Folder media upload
+media_folder: images
+public_folder: /images
+
+# Locale UI (antarmuka CMS dalam Bahasa Indonesia)
+locale: id
+
+# Koleksi konten
+collections:
+  # ==============================================================
+  # ARMADA KENDARAAN (_data-product/)
+  # ==============================================================
+  - name: data-product
+    label: Armada Kendaraan
+    label_singular: Kendaraan
+    folder: _data-product
+    create: true
+    delete: true
+    slug: "{{fields.nomor-urut}}-{{fields.nama-produk | slugify}}"
+    editor:
+      preview: false
+    fields:
+      - label: "Language"
+        name: language
+        widget: hidden
+        default: id
+
+      - label: "Layout"
+        name: layout
+        widget: hidden
+        default: product-item
+
+      - label: "Nomor Urut (untuk nama file)"
+        name: nomor-urut
+        widget: number
+        hint: "Angka urutan untuk nama file, misal: 1, 2, 3, dst."
+        value_type: int
+
+      - label: "Gambar Kendaraan"
+        name: image
+        widget: image
+        hint: "Gambar utama produk (format PNG/JPG, rasio 1:1)"
+
+      - label: "Permalink (URL)"
+        name: permalink
+        widget: string
+        hint: "Contoh: /rental-mobil-xenia/"
+        pattern: ["^\\/[a-z0-9\\-]+\\/$", "Harus diawali dan diakhiri dengan / (misal: /rental-mobil-xenia/)"]
+
+      - label: "Judul SEO"
+        name: title
+        widget: string
+        hint: "Judul halaman untuk mesin pencari"
+
+      - label: "Kata Kunci SEO"
+        name: keyword
+        widget: string
+
+      - label: "Deskripsi SEO"
+        name: description
+        widget: text
+
+      - label: "Nama Produk (singkat)"
+        name: nama-produk
+        widget: string
+        hint: "Nama pendek, contoh: Xenia"
+
+      - label: "Nama Produk Lengkap"
+        name: nama-produk-asli
+        widget: string
+        hint: "Nama lengkap, contoh: Daihatsu Xenia"
+
+      - label: "SKU"
+        name: sku
+        widget: string
+        hint: "Kode produk unik, contoh: DAIHATSU-XENIA-6-HTM-001"
+
+      - label: "GTIN8"
+        name: gtin8
+        widget: string
+        required: false
+
+      - label: "Harga Valid Sampai (priceValidUntil)"
+        name: priceValidUntil
+        widget: string
+        required: false
+        hint: "Format: YYYYMMDD, contoh: 20251231"
+
+      - label: "Harga Schema (angka saja, tanpa titik)"
+        name: harga-schema
+        widget: number
+        hint: "Digunakan untuk schema.org, contoh: 550000"
+
+      - label: "Harga Tampil"
+        name: harga
+        widget: string
+        hint: "Format tampilan, contoh: 550.000 atau Harga Call"
+
+      - label: "Promo MURAH (tampilkan ribbon)"
+        name: murah
+        widget: boolean
+        default: false
+        required: false
+
+      - label: "Jenis Kendaraan"
+        name: jenis-kendaraan
+        widget: select
+        options:
+          - Mini MPV
+          - MPV
+          - MPV Premium
+          - Medium MPV
+          - Modern MPV Crossover
+          - Luxury MPV Crossover
+          - Luxury MPV
+          - Ultra Luxury MPV
+          - Minibus
+          - Minibus Eksekutif
+          - SUV
+          - Sedan
+          - Lainnya
+
+      - label: "Kapasitas Tempat Duduk"
+        name: tempat-duduk
+        widget: number
+
+      - label: "Label Durasi"
+        name: durasi
+        widget: hidden
+        default: Durasi
+
+      - label: "Keterangan Durasi"
+        name: ket-durasi
+        widget: string
+        default: "12 Jam"
+
+      - label: "Label Fasilitas"
+        name: fasilitas
+        widget: hidden
+        default: Fasilitas
+
+      - label: "Fasilitas 1"
+        name: ket-fasilitas-1
+        widget: string
+        default: "Mobil"
+
+      - label: "Fasilitas 2"
+        name: ket-fasilitas-2
+        widget: string
+        default: "Driver BBM"
+
+      - label: "Label Rute"
+        name: rute
+        widget: hidden
+        default: Rute
+
+      - label: "Rute Utama"
+        name: ket-rute
+        widget: string
+        default: "Area Surabaya"
+
+      - label: "Info Luar Kota"
+        name: ex-rute
+        widget: string
+        required: false
+        default: "Pemakaian luar kota harga call"
+
+      - label: "Deskripsi Singkat Artikel"
+        name: artikel
+        widget: text
+        required: false
+
+      - label: "Konten Halaman"
+        name: body
+        widget: markdown
+
+  # ==============================================================
+  # TESTIMONI PELANGGAN (_data-client/)
+  # ==============================================================
+  - name: data-client
+    label: Testimoni Pelanggan
+    label_singular: Testimoni
+    folder: _data-client
+    create: true
+    delete: true
+    slug: "{{fields.nama-client | slugify}}"
+    editor:
+      preview: false
+    fields:
+      - label: "Language"
+        name: language
+        widget: hidden
+        default: id
+
+      - label: "Layout"
+        name: layout
+        widget: hidden
+        default: testimoni-item
+
+      - label: "Urutan Tampil"
+        name: data-key
+        widget: number
+        required: false
+
+      - label: "Foto / Gambar"
+        name: image
+        widget: image
+        required: false
+        hint: "Foto mobil atau ilustrasi (opsional)"
+
+      - label: "Nama Pelanggan"
+        name: nama-client
+        widget: string
+
+      - label: "Unit yang Disewa"
+        name: nama-unit
+        widget: string
+        hint: "Contoh: Toyota Avanza"
+
+      - label: "Tanggal Sewa"
+        name: tanggal-beli
+        widget: datetime
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+
+      - label: "Judul Komentar"
+        name: judul-komentar
+        widget: string
+
+      - label: "Deskripsi SEO"
+        name: description
+        widget: text
+        required: false
+
+      - label: "Kata Kunci SEO"
+        name: keyword
+        widget: string
+        required: false
+
+      - label: "Rating (1–5 bintang)"
+        name: rating
+        widget: select
+        options:
+          - label: "⭐ 1 Bintang"
+            value: 1
+          - label: "⭐⭐ 2 Bintang"
+            value: 2
+          - label: "⭐⭐⭐ 3 Bintang"
+            value: 3
+          - label: "⭐⭐⭐⭐ 4 Bintang"
+            value: 4
+          - label: "⭐⭐⭐⭐⭐ 5 Bintang"
+            value: 5
+        default: 5
+
+      - label: "Komentar Pelanggan"
+        name: komentar
+        widget: text
+
+  # ==============================================================
+  # BLOG & ARTIKEL (_posts/)
+  # ==============================================================
+  - name: posts
+    label: "Blog & Artikel"
+    label_singular: Artikel
+    folder: _posts
+    create: true
+    delete: true
+    slug: "{{year}}-{{month}}-{{day}}-{{fields.judul-post | slugify}}"
+    editor:
+      preview: false
+    fields:
+      - label: "Language"
+        name: language
+        widget: hidden
+        default: id
+
+      - label: "Layout"
+        name: layout
+        widget: hidden
+        default: post
+
+      - label: "Urutan"
+        name: data-key
+        widget: number
+        required: false
+
+      - label: "Gambar Artikel"
+        name: image
+        widget: image
+        hint: "Gambar thumbnail artikel"
+
+      - label: "Nama Penulis"
+        name: nama-penulis
+        widget: string
+
+      - label: "Tanggal Terbit"
+        name: date
+        widget: datetime
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+
+      - label: "Tanggal Diperbarui"
+        name: modified-date
+        widget: datetime
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+        required: false
+
+      - label: "Judul Artikel"
+        name: judul-post
+        widget: string
+
+      - label: "Kolom / Kategori"
+        name: kolom
+        widget: select
+        options:
+          - TIPS
+          - NEWS
+          - INFO
+
+      - label: "Deskripsi SEO"
+        name: description
+        widget: text
+
+      - label: "Kata Kunci SEO"
+        name: keyword
+        widget: string
+
+      - label: "Konten Artikel"
+        name: body
+        widget: markdown
+
+  # ==============================================================
+  # SLIDER DESKTOP (_data-slider-desktop/) — file-based
+  # ==============================================================
+  - name: slider-desktop
+    label: "Slider Banner Desktop"
+    editor:
+      preview: false
+    files:
+      - label: "Banner Desktop 1"
+        name: banner-desktop-1
+        file: _data-slider-desktop/banner-1.md
+        fields:
+          - label: "Gambar Banner"
+            name: amp-img
+            widget: image
+            hint: "Rekomendasi ukuran: 980×320 px (format WebP/JPG)"
+          - label: "Lebar (width)"
+            name: width
+            widget: number
+            default: 980
+          - label: "Tinggi (height)"
+            name: height
+            widget: number
+            default: 320
+          - label: "Teks Alt"
+            name: alt
+            widget: string
+
+      - label: "Banner Desktop 2"
+        name: banner-desktop-2
+        file: _data-slider-desktop/banner-2.md
+        fields:
+          - label: "Gambar Banner"
+            name: amp-img
+            widget: image
+            hint: "Rekomendasi ukuran: 980×320 px (format WebP/JPG)"
+          - label: "Lebar (width)"
+            name: width
+            widget: number
+            default: 980
+          - label: "Tinggi (height)"
+            name: height
+            widget: number
+            default: 320
+          - label: "Teks Alt"
+            name: alt
+            widget: string
+
+  # ==============================================================
+  # SLIDER MOBILE (_data-slider-mobile/) — file-based
+  # ==============================================================
+  - name: slider-mobile
+    label: "Slider Banner Mobile"
+    editor:
+      preview: false
+    files:
+      - label: "Banner Mobile 1"
+        name: banner-mobile-1
+        file: _data-slider-mobile/banner-1.md
+        fields:
+          - label: "Gambar Banner"
+            name: amp-img
+            widget: image
+            hint: "Rekomendasi ukuran: 480×320 px (format WebP/JPG)"
+          - label: "Lebar (width)"
+            name: width
+            widget: number
+            default: 480
+          - label: "Tinggi (height)"
+            name: height
+            widget: number
+            default: 320
+          - label: "Teks Alt"
+            name: alt
+            widget: string
+
+      - label: "Banner Mobile 2"
+        name: banner-mobile-2
+        file: _data-slider-mobile/banner-2.md
+        fields:
+          - label: "Gambar Banner"
+            name: amp-img
+            widget: image
+            hint: "Rekomendasi ukuran: 480×320 px (format WebP/JPG)"
+          - label: "Lebar (width)"
+            name: width
+            widget: number
+            default: 480
+          - label: "Tinggi (height)"
+            name: height
+            widget: number
+            default: 320
+          - label: "Teks Alt"
+            name: alt
+            widget: string
+

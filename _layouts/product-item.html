@@ -2,8 +2,8 @@
 <html amp lang="{{ site.lang }}">
 
 <head>
-    <title>{{ page.title }} | {{ site.company }}</title>
     {% include metadata.html %}
+    <title>{{ page.title }} | {{ site.company }}</title>
     <link rel="preload" as="script" href="https://cdn.ampproject.org/v0.js">
     <script async src="https://cdn.ampproject.org/v0.js"></script>
     <script custom-element="amp-sidebar" async src="https://cdn.ampproject.org/v0/amp-sidebar-0.1.js"></script>
@@ -96,6 +96,10 @@
       }
     </script>
     </amp-analytics>
+    <!-- Google Tag (gtag.js) for Google Ads - AMP Compliant -->
+    <amp-analytics config="https://www.googletagmanager.com/amp.json?id=AW-17005499642" data-credentials="include"></amp-analytics>
+    <!-- Google Tag Manager - AMP Compliant -->
+    <amp-analytics config="https://www.googletagmanager.com/amp.json?id=GTM-TN92XWRZ" data-credentials="include"></amp-analytics>
     {% include header.html %}
     <main class="listing-page">
         <amp-state id="brandContent">
@@ -112,7 +116,7 @@
             </script>
         </amp-state>
         <section class="card user-reviews padding-small-b">
-            <h1 class="heading">{{ page.nama-produk }}</h1>
+            <h1 class="heading">{{ page.nama-produk-asli | default: page.nama-produk }}</h1>
             <!-- breadcrumb Start -->
             <script type="application/ld+json">
             {
@@ -142,135 +146,104 @@
                 <li class="active"><a href="{{ page.url }}" title="{{ page.nama-produk }}">{{ page.nama-produk }}</a></li>
             </ul>
             <!-- breadcrumb End -->
+            {% if page.artikel and page.artikel != "" %}
             <div class="read-more brand-content">
                 <div class="collapsed" [class]="brandContent[brandContent.currentState].style">
                     <p class="info gr-mrgn-t">{{ page.artikel }}</p>
                 </div>
             </div>
             <button on="tap:AMP.setState({brandContent : {currentState: (brandContent.currentState == 'Tutup' ? 'Baca Selengkapnya' : 'Tutup')}})" [text]=" brandContent.currentState">Baca Selengkapnya</button>
-            <ul class="listing basic-listing-card">
-                <div class="row">
+            {% endif %}
+
+            <ul class="listing basic-listing-card detail-listing-card">
+                <!-- Row Produk: Berdampingan di PC (Left: Visual Mobil, Right: Info & Pemesanan) -->
+                <div class="row row-product-item">
+                    <!-- Kolom Kiri: Visual Mobil, Logo Safajaya & Ribbon Murah -->
                     <div class="column-product-item">
-                        <div class="card">
-                            <div>
-                                <amp-carousel lightbox width="1" height="1" layout="responsive" type="slides" autoplay delay="2000">
-                                    <figure>
-                                        <amp-img src="{{ page.image }}" width="1" height="1" alt="{{ page.nama-produk }}" title="{{ page.nama-produk }}" layout="responsive"></amp-img>
-                                        <figcaption>{{ page.nama-produk }}<br>{{ page.harga }}<br>Keterangan :<br>{{ page.durasi }}: {{ page.ket-durasi }}<br>{{ page.fasilitas }}: {{ page.ket-fasilitas-1 }} + {{ page.ket-fasilitas-2 }}<br>{{ page.rute }}: {{ page.ket-rute }}, {{ page.ex-rute }}
-                                        </figcaption>
-                                    </figure>
-                                </amp-carousel>
+                        <div class="card card-item-visual">
+                            {% if page.murah and page.murah != "" and page.murah != false %}
+                            <div class="ribbon-wrapper">
+                                <div class="ribbon-murah">{% if page.murah == true or page.murah == "murah" or page.murah == "MURAH" %}MURAH{% else %}{{ page.murah }}{% endif %}</div>
+                            </div>
+                            {% endif %}
+                            <div class="card-thumb">
+                                <div class="card-logo">
+                                    <amp-img src="/images/logo-safajaya-kotak.png" width="164" height="82" layout="fixed" alt="{{ site.company }}" title="{{ site.company }}"></amp-img>
+                                </div>
+                                <amp-img class="card-car-img" src="{{ page.image }}" width="1" height="1" alt="{{ page.nama-produk }}" title="{{ page.nama-produk }}" layout="responsive" lightbox></amp-img>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Kolom Kanan: Detail Harga, Nama, Tombol Pesan & Spesifikasi -->
                     <div class="column-post">
-                        <div class="card">
-                            <section>
-                                <div class="variants-compare-list">
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <a>{{ page.nama-produk }}</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <a>{{ page.harga }}</a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                            </section>
-                            <div class="card-link">
+                        <div class="card card-item-info">
+                            <div class="product-header-center">
+                                <div class="card-product-price">Rp {{ page.harga }}</div>
+                                <h2 class="card-product-title">{{ page.nama-produk-asli | default: page.nama-produk }}</h2>
+                            </div>
+
+                            <div class="card-action">
                                 <a class="beli-sekarang" href="https://api.whatsapp.com/send?text=halo%20{{ site.company }}%0ASaya%20mau%20pesan%0AKendaraan%20:%20{{ page.nama-produk }}%0A{{ site.siteurl }}{{ page.url }}%0ANama%20:%20%0AAlamat%20:%20%0ATanggal%20:%20%0ADurasi%20Pesan%20:%20%0A%20&phone={{ site.telephone }}"><i class="icon-whatsapp"></i> Pesan Sekarang</a>
                             </div>
-                            <section>
-                                <div class="variants-compare-list">
-                                    <table>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <a>Keterangan :</a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <a>{{ page.durasi }}</a>
-                                                </td>
-                                                <td>
-                                                    <ul class="card-panel-list">
-                                                        <li>{{ page.ket-durasi }}</li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <a>{{ page.fasilitas }}</a>
-                                                </td>
-                                                <td>
-                                                    <ul class="card-panel-list">
-                                                        <li>{{ page.ket-fasilitas-1 }}</li>
-                                                    </ul>
-                                                </td>
-                                                <td>
-                                                    <ul class="card-panel-list">
-                                                        <li>{{ page.ket-fasilitas-2 }}</li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <a>{{ page.rute }}</a>
-                                                </td>
-                                                <td>
-                                                    <ul class="card-panel-list">
-                                                        <li>{{ page.ket-rute }}</li>
-                                                    </ul>
-                                                    <ul class="card-panel-list">
-                                                        <li>{{ page.ex-rute }}</li>
-                                                    </ul>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </section>
+
+                            <ul class="product-specs">
+                                <li><span class="spec-label">{{ page.durasi }}</span> : <span class="spec-val">{{ page.ket-durasi }}</span></li>
+                                <li><span class="spec-label">{{ page.fasilitas }}</span> : <span class="spec-val">{{ page.ket-fasilitas-1 }} {{ page.ket-fasilitas-2 }}</span></li>
+                                <li><span class="spec-label">{{ page.rute }}</span> : <span class="spec-val">{{ page.ket-rute }}, {{ page.ex-rute }}</span></li>
+                                {% if page.tempat-duduk %}
+                                <li><span class="spec-label">Kapasitas</span> : <span class="spec-val">{{ page.tempat-duduk }} Tempat Duduk</span></li>
+                                {% endif %}
+                                {% if page.jenis-kendaraan %}
+                                <li><span class="spec-label">Jenis Mobil</span> : <span class="spec-val">{{ page.jenis-kendaraan }}</span></li>
+                                {% endif %}
+                            </ul>
                         </div>
                     </div>
-                    <div class="column">
-                        <div class="card">
-                            <p>
-                                <i>Share on : </i>&nbsp;&nbsp;&nbsp;
-                                <a href="https://www.facebook.com/dialog/share?app_id={{ site.fb_app_id }}&display=popup&href={{ site.url }}{{ page.url }}" rel="noreferrer"><i class="icon-facebook"></i></a>
-                                &nbsp;&nbsp;&nbsp;
-                                <a href="https://twitter.com/intent/tweet?text={{ page.title }}%0A{{ page.description }}%0A{{ site.url }}{{ page.url }}"><i class="icon-twitter" rel="noreferrer"></i></a>
-                                &nbsp;&nbsp;&nbsp;
-                                <a href="https://api.whatsapp.com/send?phone=&text={{ page.title }}%0A{{ page.description }}%0A{{ site.url }}{{ page.url }}" rel="noreferrer"><i class="icon-whatsapp"></i></a>
-                            </p>
+                </div>
+
+                <!-- Row Interaksi: 3 Kolom Berdampingan di PC (Share, Like, Review) -->
+                <div class="row row-interaction">
+                    <div class="column column-interaction">
+                        <div class="card card-share">
+                            <span class="share-title"><i>Bagikan :</i></span>
+                            <div class="share-icons">
+                                <a class="share-btn share-fb" href="https://www.facebook.com/dialog/share?app_id={{ site.fb_app_id }}&display=popup&href={{ site.url }}{{ page.url }}" rel="noreferrer" title="Share Facebook"><i class="icon-facebook"></i></a>
+                                <a class="share-btn share-tw" href="https://twitter.com/intent/tweet?text={{ page.title }}%0A{{ page.description }}%0A{{ site.url }}{{ page.url }}" rel="noreferrer" title="Share Twitter"><i class="icon-twitter"></i></a>
+                                <a class="share-btn share-wa" href="https://api.whatsapp.com/send?phone=&text={{ page.title }}%0A{{ page.description }}%0A{{ site.url }}{{ page.url }}" rel="noreferrer" title="Share WhatsApp"><i class="icon-whatsapp"></i></a>
+                            </div>
                         </div>
                     </div>
-                    <div class="column">
-                        <div class="card">
+                    <div class="column column-interaction">
+                        <div class="card card-like">
                             <amp-facebook-like width="110" height="20" layout="fixed" data-layout="button_count" data-href="{{ site.siteurl }}{{ page.url }}">
                             </amp-facebook-like>
                         </div>
                     </div>
-                    <div class="column">
-                        <div class="card">
-                            <a title="Klik disini untuk ulas kami di Google" href="https://search.google.com/local/writereview?placeid=ChIJSdI5tmb71y0RHq1F_d2DJc0" rel="noreferrer">Klik disini untuk ulas kami di Google</a>
+                    <div class="column column-interaction">
+                        <div class="card card-review">
+                            <a class="google-review-btn" title="Klik disini untuk ulas kami di Google" href="https://search.google.com/local/writereview?placeid=ChIJSdI5tmb71y0RHq1F_d2DJc0" rel="noreferrer">
+                                ⭐ Ulas Kami di Google
+                            </a>
                         </div>
                     </div>
-                    <div class="column">
-                        <div class="card">
+                </div>
+
+                <!-- Row Komentar Facebook -->
+                <div class="row row-comments">
+                    <div class="column-full">
+                        <div class="card card-comments">
+                            <h3 class="comments-heading">Diskusi & Komentar</h3>
                             <amp-facebook-comments width="552" height="310" layout="responsive" data-numposts="5" data-href="{{ site.siteurl }}{{ page.url }}">
                             </amp-facebook-comments>
                         </div>
                     </div>
                 </div>
             </ul>
-            <div class="info line-clamp">
-                {{ page }}
+
+            <!-- Konten Artikel / Deskripsi Produk -->
+            <div class="info line-clamp product-content-area">
+                {{ content }}
             </div>
         </section>
         {% include produk-lain.html %}

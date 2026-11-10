@@ -2,8 +2,8 @@
 <html amp lang="{{ site.lang }}">
 
 <head>
-    <title>{{ page.title }} | {{ site.company }}</title>
     {% include metadata.html %}
+    <title>{{ page.title }} | {{ site.company }}</title>
     <link rel="preload" as="script" href="https://cdn.ampproject.org/v0.js">
     <script async src="https://cdn.ampproject.org/v0.js"></script>
     <script custom-element="amp-sidebar" async src="https://cdn.ampproject.org/v0/amp-sidebar-0.1.js"></script>
@@ -40,6 +40,10 @@
       }
     </script>
     </amp-analytics>
+    <!-- Google Tag (gtag.js) for Google Ads - AMP Compliant -->
+    <amp-analytics config="https://www.googletagmanager.com/amp.json?id=AW-17005499642" data-credentials="include"></amp-analytics>
+    <!-- Google Tag Manager - AMP Compliant -->
+    <amp-analytics config="https://www.googletagmanager.com/amp.json?id=GTM-TN92XWRZ" data-credentials="include"></amp-analytics>
     {% include header.html %}
     {% include slider.html %}
     <main class="home-page">

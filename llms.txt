@@ -1,0 +1,33 @@
+---
+layout: null
+permalink: /llms.txt
+---
+# {{ site.company }}
+
+> Penyedia jasa rental & sewa mobil profesional di Surabaya, Jawa Timur, Indonesia.
+> Referensi lengkap untuk agen AI tersedia di [/llms-full.txt]({{ site.url }}/llms-full.txt)
+
+## Kontak & Lokasi
+- Alamat: {{ site.streetAddress }}, {{ site.addressLocality }}, {{ site.addressRegion }} {{ site.postalCode }}, {{ site.addressCountry }}
+- WhatsApp/CS: +{{ site.telephone }} ({{ site.telephone-detail }})
+- Alternatif: {{ site.telephone-detail2 }}
+- Email: {{ site.email }}
+- Website: {{ site.url }}
+
+## Layanan
+- Paket: Mobil + Driver + BBM
+- Durasi: 12 Jam, Full Day, Harian, Mingguan, Bulanan
+- Area: Surabaya (dalam kota) dan seluruh Jawa Timur (luar kota, harga call)
+- Format pesan WhatsApp: Nama / Alamat / Jenis Mobil / Tanggal / Durasi → kirim ke +{{ site.telephone }}
+
+## Armada & Harga
+{% assign sorted_products = site.data-product | sort: 'nomor-urut' -%}
+{% for item in sorted_products -%}
+- [{{ item.nama-produk-asli | default: item.nama-produk }}]({{ site.url }}{{ item.url }}) — Rp {{ item.harga | default: item.harga-schema }} / {{ item.ket-durasi | default: "12 Jam" }} — {{ item.jenis-kendaraan | default: "MPV" }} {{ item.tempat-duduk | default: "6" }} seat — {{ item.ket-fasilitas-1 }} {{ item.ket-fasilitas-2 }}{% if item.murah %} ★ PROMO MURAH{% endif %}
+{% endfor %}
+## Halaman Penting
+- [Harga & Katalog]({{ site.url }}/harga/)
+- [Kontak & Reservasi]({{ site.url }}/kontak-kami/)
+- [Testimoni]({{ site.url }}/testimoni/)
+- [Syarat & Ketentuan]({{ site.url }}/syarat-dan-ketentuan/)
+- [Blog]({{ site.url }}/blog/)

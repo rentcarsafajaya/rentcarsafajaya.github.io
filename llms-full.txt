@@ -1,0 +1,179 @@
+---
+layout: null
+permalink: /llms-full.txt
+---
+# {{ site.company }} — Referensi Lengkap untuk Agen AI
+# File ini di-generate otomatis oleh Jekyll dari data koleksi situs.
+# Tidak perlu diedit manual. Update data di _data-product/, _data-client/, _posts/.
+# Generated: {{ site.time }}
+
+---
+
+## BAGIAN 1 — PROFIL BISNIS
+
+| Field | Nilai |
+|---|---|
+| Perusahaan | {{ site.company }} |
+| Website | {{ site.url }} |
+| Email | {{ site.email }} |
+| Telepon 1 | {{ site.telephone-detail }} |
+| Telepon 2 | {{ site.telephone-detail2 }} |
+| WhatsApp | +{{ site.telephone }} |
+| Alamat | {{ site.streetAddress }}, {{ site.addressLocality }}, {{ site.addressRegion }} {{ site.postalCode }}, {{ site.addressCountry }} |
+| Bidang | Rental & Sewa Mobil |
+| Wilayah | Surabaya, Jawa Timur, Indonesia |
+
+WhatsApp API Link (pesan umum): {{ site.whatsapp-api }}
+
+---
+
+## BAGIAN 2 — KATALOG ARMADA KENDARAAN
+# Total unit: {{ site.data-product | size }}
+{% assign sorted_products = site.data-product | sort: 'nomor-urut' %}
+{% for item in sorted_products %}
+### {{ item.nama-produk-asli | default: item.nama-produk }}
+- URL: {{ site.url }}{{ item.url }}
+- Nama Singkat: {{ item.nama-produk }}
+- Kategori: {{ item.jenis-kendaraan | default: "MPV" }}
+- Kapasitas: {{ item.tempat-duduk | default: "6" }} penumpang
+- Harga: Rp {{ item.harga | default: item.harga-schema }} / {{ item.ket-durasi | default: "12 Jam" }}
+- Harga Schema (angka): {{ item.harga-schema }}
+- Fasilitas: {{ item.ket-fasilitas-1 }} + {{ item.ket-fasilitas-2 }}
+- Rute Layanan: {{ item.ket-rute }}
+- Catatan Luar Kota: {{ item.ex-rute }}
+- Deskripsi: {{ item.description }}
+- Status Promo: {% if item.murah %}MURAH / Promo Harga Terbaik{% else %}Harga Normal{% endif %}
+- SKU: {{ item.sku }}
+- Link Pesan WhatsApp: https://api.whatsapp.com/send?text=halo%20{{ site.company | uri_escape }}%0ASaya%20mau%20pesan%0AKendaraan%20:%20{{ item.nama-produk | uri_escape }}%0A{{ site.url }}{{ item.url }}%0ANama%20:%20%0AAlamat%20:%20%0ATanggal%20:%20%0ADurasi%20:%20&phone={{ site.telephone }}
+{% endfor %}
+
+---
+
+## BAGIAN 3 — PROSEDUR PEMESANAN
+
+1. Pilih armada dari halaman: {{ site.url }}/harga/
+2. Hubungi CS via WhatsApp +{{ site.telephone }} atau klik "Pesan Sekarang" di halaman produk
+3. Isi informasi:
+   - Nama Lengkap
+   - Alamat Penjemputan
+   - Tanggal & Jam Penjemputan
+   - Durasi Sewa (12 Jam / jumlah hari)
+   - Jenis Kendaraan
+4. Konfirmasi jadwal & harga bersama CS
+5. Pembayaran: transfer bank atau tunai saat penjemputan
+
+Nomor WhatsApp API untuk agen AI:
+`https://api.whatsapp.com/send?text=halo%20{{ site.company | uri_escape }}%0ASaya%20mau%20pesan%0AKendaraan%20:%20[NAMA_MOBIL]%0ANama%20:%20[NAMA]%0AAlamat%20:%20[ALAMAT]%0ATanggal%20:%20[TANGGAL]%0ADurasi%20:%20[DURASI]&phone={{ site.telephone }}`
+
+---
+
+## BAGIAN 4 — SYARAT & KETENTUAN RINGKAS
+
+- Pemesanan minimal H-1 sebelum pemakaian
+- Pembayaran tunai atau transfer bank
+- Sewa dengan driver: paket all-in (mobil + driver + BBM)
+- Luar kota Surabaya: harga dikonfirmasi dahulu via CS
+- Kerusakan akibat kelalaian: tanggung jawab penyewa
+- Pembatalan: konfirmasi min. 12 jam sebelum penjemputan
+- Barang terlarang dan aktivitas ilegal: dilarang keras di kendaraan
+
+Detail lengkap: {{ site.url }}/syarat-dan-ketentuan/
+
+---
+
+## BAGIAN 5 — TESTIMONI PELANGGAN
+# Total testimoni: {{ site.data-client | size }}
+{% for item in site.data-client %}
+- Nama: {{ item.nama-client }} | Unit: {{ item.nama-unit }} | Tanggal: {{ item.tanggal-beli }} | Rating: {{ item.rating }}/5
+  Ulasan: "{{ item.komentar }}"
+{% endfor %}
+
+---
+
+## BAGIAN 6 — ARTIKEL & BLOG
+# Total artikel: {{ site.posts | size }}
+{% for post in site.posts %}
+- [{{ post.judul-post }}]({{ site.url }}{{ post.url }}) — {{ post.date | date: "%d %B %Y" }}
+  Kategori: {{ post.kolom }} | Penulis: {{ post.nama-penulis }}
+  Deskripsi: {{ post.description }}
+{% endfor %}
+
+---
+
+## BAGIAN 7 — INFORMASI TEKNIS WEBSITE
+
+- Format Halaman Publik: AMPHTML (Accelerated Mobile Pages) — tidak mendukung custom JS
+- Format file data: Markdown + YAML Frontmatter
+- Sitemap: {{ site.url }}/sitemap.xml
+- robots.txt: {{ site.url }}/robots.txt
+
+---
+
+## BAGIAN 8 — PANDUAN AGEN AI: MEMBACA & MENULIS DATA
+
+### 8.1 Struktur Direktori File Data
+```
+_data-product/     → Katalog armada kendaraan (1 file per unit)
+_data-client/      → Testimoni pelanggan (1 file per testimoni)
+_posts/            → Artikel blog (format: YYYY-MM-DD-judul.md)
+_data-artikel/     → Artikel halaman SEO statis
+_data-slider-desktop/ → Banner slider desktop
+_data-slider-mobile/  → Banner slider mobile
+_includes/         → Komponen HTML layout (header, card, footer)
+_layouts/          → Template halaman lengkap
+_config.yml        → Konfigurasi global (kontak, nama, URL)
+admin/config.yml   → Konfigurasi Sveltia CMS
+```
+
+### 8.2 Frontmatter YAML: Skema Field Produk (data-product)
+```yaml
+language: id
+layout: product-item
+image: /images/[nama-file].png
+permalink: /[slug-produk]/
+title: [Judul Halaman SEO]
+description: [Deskripsi meta SEO]
+keyword: [kata kunci SEO]
+nama-produk: [Nama singkat, misal: Xenia]
+nama-produk-asli: [Nama lengkap, misal: Daihatsu Xenia]
+sku: [Kode SKU internal]
+harga-schema: [Angka harga tanpa titik, misal: 550000]
+harga: "[Harga tampil, misal: 550.000]"  # selalu pakai tanda kutip
+murah: true  # Hapus baris ini jika tidak ada promo
+jenis-kendaraan: [Mini MPV / MPV / SUV / Van]
+tempat-duduk: [Angka]
+ket-durasi: 12 Jam
+ket-fasilitas-1: Mobil
+ket-fasilitas-2: Driver BBM
+ket-rute: Area Surabaya
+ex-rute: Pemakaian luar kota harga call
+artikel: [Deskripsi panjang produk untuk SEO]
+```
+
+### 8.3 Frontmatter YAML: Skema Field Testimoni (data-client)
+```yaml
+language: id
+layout: testimoni-item
+image: /images/[foto].png
+nama-client: [Nama pelanggan]
+nama-unit: [Nama kendaraan yang disewa]
+tanggal-beli: [YYYY-MM-DD]
+judul-komentar: [Judul ulasan singkat]
+description: [Isi ulasan untuk meta SEO]
+rating: [1-5]
+komentar: [Isi ulasan lengkap]
+```
+
+### 8.4 Frontmatter YAML: Skema Field Blog Post (_posts)
+```yaml
+language: id
+layout: post
+image: /images/[gambar.jpg]
+nama-penulis: [Nama Penulis]
+date: [YYYY-MM-DD]
+modified-date: [YYYY-MM-DD]
+judul-post: [Judul Artikel]
+kolom: [TIPS / NEWS / INFO]
+description: [Deskripsi meta SEO]
+keyword: [kata kunci SEO]
+```

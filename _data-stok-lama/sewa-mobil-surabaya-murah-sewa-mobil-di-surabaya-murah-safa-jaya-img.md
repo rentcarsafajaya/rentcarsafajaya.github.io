@@ -15,19 +15,40 @@ modified-date: 2020-02-06
 <p>Apabila Anda masih bingung dengan gambaran seperti apa kendaraannya, berikut adalah pilihan kendaraan yang disediakan Rental Mobil Surabaya :</p>
 <br>
 <ul class="basic-listing-card user-reviews">
-    <amp-carousel type="carousel" height="400" layout="fixed-height">
-        {% for item in site.data-product %}
-        <li class="card card-panel">
-            <a href="{{ item.url }}">
-                <amp-img src="{{ item.image }}" width="1" height="1" alt="{{ item.nama-produk }}" title="{{ item.nama-produk }}" layout="responsive"></amp-img>
+    <amp-carousel type="carousel" height="520" layout="fixed-height">
+        {% assign sorted_products = site.data-product | sort: 'nomor-urut' %}
+        {% for item in sorted_products %}
+        <li class="card">
+            {% if item.murah and item.murah != "" and item.murah != false %}
+            <div class="ribbon-wrapper">
+                <div class="ribbon-murah">{% if item.murah == true or item.murah == "murah" or item.murah == "MURAH" %}MURAH{% else %}{{ item.murah }}{% endif %}</div>
+            </div>
+            {% endif %}
+            <a href="{{ item.url }}" title="{{ item.nama-produk }}">
+                <div class="card-thumb">
+                    <div class="card-logo">
+                        <amp-img src="/images/logo-safajaya-kotak.png" width="164" height="82" layout="fixed" alt="{{ site.company }}" title="{{ site.company }}"></amp-img>
+                    </div>
+                    <amp-img class="card-car-img" src="{{ item.image }}" width="1" height="1" alt="{{ item.nama-produk }} " title="{{ item.nama-produk }} " layout="responsive"></amp-img>
+                </div>
             </a>
-            <a class="info" href="{{ item.url }}">{{ item.nama-produk }}</a>
-            <ul>
-                <li>{{ item.durasi }} : {{ item.ket-durasi }}</li>
-                <li>{{ item.fasilitas }} : {{ item.ket-fasilitas-1 }} {{ item.ket-fasilitas-2 }}</li>
-                <li>{{ item.rute }} : {{ item.ket-rute }}, {{ item.ex-rute }}</li>
-            </ul>
-            <a class="info" href="{{ item.url }}" title="Harga sewa {{ item.nama-produk }} adalah {{ item.harga }}">{{ item.harga }}</a>
+            <div class="card-panel">
+                <div class="product-header-center">
+                    <a class="card-product-price" href="{{ item.url }}" title="{{ item.nama-produk }}">Rp {{ item.harga }}</a>
+                    <a class="card-product-title" href="{{ item.url }}" title="{{ item.nama-produk }}">{{ item.nama-produk }}</a>
+                </div>
+                <ul class="product-specs">
+                    <li><span class="spec-label">{{ item.durasi }}</span> : <span class="spec-val">{{ item.ket-durasi }}</span></li>
+                    <li><span class="spec-label">{{ item.fasilitas }}</span> : <span class="spec-val">{{ item.ket-fasilitas-1 }} {{ item.ket-fasilitas-2 }}</span></li>
+                    <li><span class="spec-label">{{ item.rute }}</span> : <span class="spec-val">{{ item.ket-rute }}, {{ item.ex-rute }}</span></li>
+                </ul>
+                <div class="product-more">
+                    <a href="{{ item.url }}" title="Selengkapnya tentang {{ item.nama-produk }}"><b>Selengkapnya...</b></a>
+                </div>
+            </div>
+            <div class="card-action">
+                <a class="beli-sekarang" href="https://api.whatsapp.com/send?text=halo%20{{ site.company }}%0ASaya%20mau%20pesan%0AKendaraan%20:%20{{ item.nama-produk }}%0A{{ site.siteurl }}{{ item.url }}%0ANama%20:%20%0AAlamat%20:%20%0ATanggal%20:%20%0ADurasi%20:%20&phone={{ site.telephone }}"><i class="icon-whatsapp"></i> Pesan Sekarang</a>
+            </div>
         </li>
         {% endfor %}
     </amp-carousel>

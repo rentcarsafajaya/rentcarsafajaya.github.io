@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Admin — SAFA JAYA TRANS CMS</title>
+  <style>
+    #cms-loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: sans-serif;
+      color: #555;
+      background: #f5f5f5;
+    }
+    #cms-loading h2 { margin: 0 0 8px; font-size: 1.2rem; }
+    #cms-loading p  { margin: 0; font-size: 0.9rem; color: #888; }
+    #cms-error {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: sans-serif;
+      color: #c00;
+      background: #fff5f5;
+      padding: 2rem;
+      text-align: center;
+    }
+    #cms-error h2 { margin: 0 0 12px; }
+    #cms-error code { background: #eee; padding: 2px 6px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+
+  <!-- Loading indicator ditampilkan sebelum CMS siap -->
+  <div id="cms-loading">
+    <h2>⏳ Memuat Sveltia CMS…</h2>
+    <p>Pastikan browser Anda terhubung ke internet.</p>
+  </div>
+
+  <!-- Pesan error jika script gagal dimuat -->
+  <div id="cms-error">
+    <h2>❌ Gagal memuat CMS</h2>
+    <p>Script Sveltia CMS tidak dapat diunduh dari CDN.<br>
+    Pastikan koneksi internet aktif, lalu muat ulang halaman ini.</p>
+    <p style="margin-top:1rem">CDN: <code>releases.sveltiacms.app</code></p>
+    <button onclick="location.reload()" style="margin-top:1rem;padding:8px 20px;cursor:pointer">🔄 Muat Ulang</button>
+  </div>
+
+  <!-- Sveltia CMS — primary CDN -->
+  <script>
+    (function() {
+      var s = document.createElement('script');
+      s.src = 'https://releases.sveltiacms.app/sveltia-cms/latest/sveltia-cms.js';
+      s.onload = function() {
+        document.getElementById('cms-loading').style.display = 'none';
+      };
+      s.onerror = function() {
+        // Fallback: coba jsDelivr mirror
+        var s2 = document.createElement('script');
+        s2.src = 'https://cdn.jsdelivr.net/npm/@sveltia/cms@latest/dist/sveltia-cms.js';
+        s2.onload = function() {
+          document.getElementById('cms-loading').style.display = 'none';
+        };
+        s2.onerror = function() {
+          document.getElementById('cms-loading').style.display = 'none';
+          document.getElementById('cms-error').style.display = 'flex';
+        };
+        document.head.appendChild(s2);
+      };
+      document.head.appendChild(s);
+
+      // Sembunyikan loading setelah 10 detik (CMS sudah render sendiri)
+      setTimeout(function() {
+        var el = document.getElementById('cms-loading');
+        if (el) el.style.display = 'none';
+      }, 10000);
+    })();
+  </script>
+
+</body>
+</html>
+
