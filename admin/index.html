@@ -182,13 +182,13 @@
     }
 
     /* Branding Overrides untuk Antarmuka Admin CMS */
-    /* 1. Sembunyikan label pihak ketiga, tombol Sign In with GitHub, & Local Repo */
+    /* 1. Sembunyikan label pihak ketiga & tombol login GitHub HANYA di dalam modal dialog */
     a[href*="sveltiacms.app"],
     footer a[href*="sveltia"],
     [class*="powered-by"],
     [data-testid="powered-by"],
-    button[aria-label*="GitHub"],
-    button[aria-label*="github"],
+    dialog[open] button[aria-label*="GitHub" i],
+    dialog[open] button[aria-label*="github" i],
     dialog .divider,
     dialog [role="separator"],
     dialog [class*="divider"],
@@ -197,7 +197,65 @@
       display: none !important;
     }
 
-    /* 2. Logo Header & Dialog Bulat Proporsional */
+    /* 2. Tombol Logout Adarent CMS (Header & Floating) */
+    .adarent-logout-btn {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 6px !important;
+      padding: 6px 14px !important;
+      background: #fee2e2 !important;
+      color: #b91c1c !important;
+      border: 1px solid #fca5a5 !important;
+      border-radius: 8px !important;
+      font-size: 13px !important;
+      font-weight: 700 !important;
+      cursor: pointer !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+      transition: all 0.2s ease !important;
+      line-height: 1.2 !important;
+      text-decoration: none !important;
+      z-index: 1000 !important;
+    }
+    .adarent-logout-btn:hover {
+      background: #ef4444 !important;
+      color: #ffffff !important;
+      border-color: #ef4444 !important;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35) !important;
+      transform: translateY(-1px) !important;
+    }
+    .adarent-logout-btn:active {
+      transform: translateY(0) !important;
+    }
+
+    /* Floating Logout Button (Fallback / Mobile) */
+    #adarent-floating-logout {
+      position: fixed;
+      top: 10px;
+      right: 14px;
+      z-index: 99999;
+      display: none;
+    }
+
+    /* Pastikan Avatar Header & Tombol Akun Selalu Terlihat */
+    header button,
+    [role="banner"] button,
+    button:has(img.avatar),
+    [aria-haspopup="menu"] {
+      display: inline-flex !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+
+    /* Item Sign Out di Menu Dropdown */
+    [role="menuitem"]:has([data-key="sign_out"]),
+    [role="menuitem"][data-key="sign_out"],
+    button[data-key="sign_out"] {
+      color: #b91c1c !important;
+      font-weight: 700 !important;
+    }
+
+    /* 3. Logo Header & Dialog Bulat Proporsional */
     header img,
     header [class*="logo"] img,
     dialog img[src*="klikada"] {
@@ -206,7 +264,7 @@
       aspect-ratio: 1 / 1 !important;
     }
 
-    /* 3. Tampilan Login Modal yang Elegan */
+    /* 4. Tampilan Login Modal yang Elegan */
     dialog[open] {
       border-radius: 16px !important;
       box-shadow: 0 25px 60px rgba(15, 23, 42, 0.35) !important;
@@ -303,17 +361,116 @@
         }
         enforceTitle();
 
+        // Fungsi Logout Terintegrasi Adarent CMS
+        async function performAdarentLogout() {
+          if (!confirm('Apakah Anda yakin ingin keluar (logout) dari Adarent CMS?')) {
+            return;
+          }
+
+          var logoutBtn = document.getElementById('adarent-header-logout') || document.getElementById('adarent-floating-logout');
+          if (logoutBtn) logoutBtn.innerHTML = '⏳ Sedang keluar…';
+
+          // 1. Coba klik tombol Sign Out bawaan jika ada di DOM
+          try {
+            var allItems = document.querySelectorAll('[role="menuitem"], button');
+            for (var m = 0; m < allItems.length; m++) {
+              var mTxt = (allItems[m].innerText || '').toLowerCase();
+              var mKey = allItems[m].getAttribute('data-key');
+              if (mKey === 'sign_out' || mTxt === 'sign out' || mTxt.includes('sign out')) {
+                allItems[m].click();
+                break;
+              }
+            }
+          } catch (e) {
+            console.warn('Sign out trigger:', e);
+          }
+
+          // 2. Bersihkan seluruh IndexedDB databases (tempat token & cache GitHub tersimpan)
+          try {
+            if (window.indexedDB && window.indexedDB.databases) {
+              var dbs = await window.indexedDB.databases();
+              for (var i = 0; i < dbs.length; i++) {
+                if (dbs[i].name) {
+                  window.indexedDB.deleteDatabase(dbs[i].name);
+                }
+              }
+            }
+          } catch (e) {
+            console.warn('IndexedDB clear:', e);
+          }
+
+          // 3. Bersihkan localStorage & sessionStorage
+          try {
+            localStorage.clear();
+            sessionStorage.clear();
+          } catch (e) {}
+
+          // 4. Reload langsung ke halaman login
+          setTimeout(function() {
+            window.location.href = window.location.pathname;
+          }, 200);
+        }
+
+        // Injeksi Tombol Logout Permanen di Header & Mobile
+        function ensureAdarentLogoutButton() {
+          var isLoginModal = document.querySelector('dialog[open]');
+          var header = document.querySelector('header, [role="banner"]');
+
+          // Jika sedang di modal login, jangan tampilkan tombol logout
+          if (isLoginModal) {
+            var existingFloat = document.getElementById('adarent-floating-logout');
+            if (existingFloat) existingFloat.style.display = 'none';
+            return;
+          }
+
+          // Tambahkan tombol di header (di samping profil/avatar atau di pojok kanan header)
+          if (header && !document.getElementById('adarent-header-logout')) {
+            var headerBtn = document.createElement('button');
+            headerBtn.id = 'adarent-header-logout';
+            headerBtn.className = 'adarent-logout-btn';
+            headerBtn.type = 'button';
+            headerBtn.title = 'Keluar dari Adarent CMS';
+            headerBtn.innerHTML = '🚪 <span>Keluar</span>';
+            headerBtn.onclick = performAdarentLogout;
+
+            // Masukkan ke dalam container menu akun atau langsung ke header
+            var avatarContainer = header.querySelector('[aria-haspopup="menu"]') || header.querySelector('img.avatar');
+            if (avatarContainer && avatarContainer.parentElement) {
+              avatarContainer.parentElement.appendChild(headerBtn);
+            } else {
+              header.appendChild(headerBtn);
+            }
+          }
+
+          // Floating button sebagai cadangan agar selalu terlihat di pojok kanan atas
+          var floatingBtn = document.getElementById('adarent-floating-logout');
+          if (!floatingBtn) {
+            floatingBtn = document.createElement('div');
+            floatingBtn.id = 'adarent-floating-logout';
+            floatingBtn.innerHTML = '<button type="button" class="adarent-logout-btn" title="Keluar dari Adarent CMS">🚪 <span>Keluar</span></button>';
+            floatingBtn.querySelector('button').onclick = performAdarentLogout;
+            document.body.appendChild(floatingBtn);
+          }
+
+          var headerBtnCheck = document.getElementById('adarent-header-logout');
+          if (headerBtnCheck && headerBtnCheck.offsetParent !== null) {
+            floatingBtn.style.display = 'none';
+          } else if (header && !isLoginModal) {
+            floatingBtn.style.display = 'block';
+          }
+        }
+
         // 2. Hilangkan 'Sign In with GitHub', 'Work with Local Repository', teks direktori, dan arahkan ke Login Kunci Akses Adarent
         function enforceAdarentLogin() {
           enforceTitle();
 
-          // Sembunyikan divider 'or' / pemisah
+          // Sembunyikan divider 'or' / pemisah di modal dialog
           var dividers = document.querySelectorAll('dialog .divider, dialog [role="separator"], dialog [class*="divider"]');
           dividers.forEach(function(div) {
             div.style.setProperty('display', 'none', 'important');
           });
 
-          // Sembunyikan teks instruksi repositori lokal ("Once prompted, select the root directory...")
+          // Sembunyikan teks instruksi repositori lokal di modal dialog
           var allDialogTexts = document.querySelectorAll('dialog p, dialog span, dialog div, dialog h3, dialog section, dialog label');
           allDialogTexts.forEach(function(el) {
             var raw = el.innerText || el.textContent || '';
@@ -326,7 +483,6 @@
               (txt.includes('rentcarsafajaya.github.io') && (txt.includes('repository') || txt.includes('prompted')))
             ) {
               el.style.setProperty('display', 'none', 'important');
-              // Sembunyikan container description jika membungkus instruksi ini
               var descWrap = el.closest('.description') || el.closest('[class*="local"]');
               if (descWrap) {
                 descWrap.style.setProperty('display', 'none', 'important');
@@ -334,66 +490,69 @@
             }
           });
 
-          // Saring dan sembunyikan semua tombol yang merujuk ke GitHub dan Local Repository
-          var allButtons = document.querySelectorAll('button');
-          allButtons.forEach(function(btn) {
-            var text = (btn.innerText || '').toLowerCase();
-            var html = (btn.innerHTML || '').toLowerCase();
-            var aria = (btn.getAttribute('aria-label') || '').toLowerCase();
-
-            // Sembunyikan tombol 'Work with Local Repository'
-            if (
-              text.includes('local repository') ||
-              html.includes('local repository') ||
-              aria.includes('local repository') ||
-              text.includes('work with local')
-            ) {
-              btn.style.setProperty('display', 'none', 'important');
-              var parentDesc = btn.closest('.description') || btn.closest('[class*="local"]');
-              if (parentDesc) {
-                parentDesc.style.setProperty('display', 'none', 'important');
-              }
-            }
-
-            // Sembunyikan tombol 'Sign in with GitHub'
-            if (text.includes('github') || html.includes('github') || aria.includes('github') || btn.querySelector('svg[class*="github"]')) {
-              btn.style.setProperty('display', 'none', 'important');
-            }
-
-            // Temukan opsi 'Sign In Using Access Token' / 'Gunakan token akses'
-            if (text.includes('access token') || text.includes('token akses') || text.includes('using access token')) {
-              btn.textContent = '🔑 Masuk dengan Kunci Akses Adarent';
-              btn.style.setProperty('display', 'inline-flex', 'important');
-              btn.style.background = '#2563eb';
-              btn.style.color = '#ffffff';
-              btn.style.fontWeight = '700';
-              btn.style.padding = '12px 24px';
-              btn.style.borderRadius = '8px';
-              btn.style.border = 'none';
-              btn.style.width = '100%';
-              btn.style.boxShadow = '0 4px 14px rgba(37, 99, 235, 0.35)';
-              btn.style.justifyContent = 'center';
-
-              // Otomatis klik tombol ini agar langsung menampilkan form input token tanpa harus klik manual
-              if (!btn.dataset.adarentAutoOpened) {
-                btn.dataset.adarentAutoOpened = 'true';
-                setTimeout(function() { btn.click(); }, 120);
-              }
-            }
-
-            // Tombol submit di dalam form token
-            if ((text === 'sign in' || text === 'masuk') && btn.closest('dialog')) {
-              btn.textContent = 'Masuk ke Adarent CMS';
-              btn.style.background = '#2563eb';
-              btn.style.color = '#ffffff';
-              btn.style.fontWeight = '700';
-              btn.style.borderRadius = '8px';
-            }
-          });
-
-          // Ganti instruksi atau teks yang menyebut GitHub di dalam modal login
+          // Saring dan modifikasi tombol HANYA di dalam modal login (dialog)
           var dialogs = document.querySelectorAll('dialog');
           dialogs.forEach(function(dlg) {
+            var dlgButtons = dlg.querySelectorAll('button');
+            dlgButtons.forEach(function(btn) {
+              var text = (btn.innerText || '').toLowerCase();
+              var html = (btn.innerHTML || '').toLowerCase();
+              var aria = (btn.getAttribute('aria-label') || '').toLowerCase();
+
+              // Sembunyikan tombol 'Work with Local Repository'
+              if (
+                text.includes('local repository') ||
+                html.includes('local repository') ||
+                aria.includes('local repository') ||
+                text.includes('work with local')
+              ) {
+                btn.style.setProperty('display', 'none', 'important');
+                var parentDesc = btn.closest('.description') || btn.closest('[class*="local"]');
+                if (parentDesc) parentDesc.style.setProperty('display', 'none', 'important');
+              }
+
+              // Sembunyikan tombol 'Sign in with GitHub' di dalam modal login
+              if (
+                (text.includes('sign in') && text.includes('github')) ||
+                (html.includes('sign in') && html.includes('github')) ||
+                (aria.includes('sign in') && aria.includes('github')) ||
+                text === 'sign in with github' ||
+                aria === 'sign in with github'
+              ) {
+                btn.style.setProperty('display', 'none', 'important');
+              }
+
+              // Temukan opsi 'Sign In Using Access Token' / 'Gunakan token akses'
+              if (text.includes('access token') || text.includes('token akses') || text.includes('using access token')) {
+                btn.textContent = '🔑 Masuk dengan Kunci Akses Adarent';
+                btn.style.setProperty('display', 'inline-flex', 'important');
+                btn.style.background = '#2563eb';
+                btn.style.color = '#ffffff';
+                btn.style.fontWeight = '700';
+                btn.style.padding = '12px 24px';
+                btn.style.borderRadius = '8px';
+                btn.style.border = 'none';
+                btn.style.width = '100%';
+                btn.style.boxShadow = '0 4px 14px rgba(37, 99, 235, 0.35)';
+                btn.style.justifyContent = 'center';
+
+                if (!btn.dataset.adarentAutoOpened) {
+                  btn.dataset.adarentAutoOpened = 'true';
+                  setTimeout(function() { btn.click(); }, 120);
+                }
+              }
+
+              // Tombol submit di dalam form token
+              if ((text === 'sign in' || text === 'masuk')) {
+                btn.textContent = 'Masuk ke Adarent CMS';
+                btn.style.background = '#2563eb';
+                btn.style.color = '#ffffff';
+                btn.style.fontWeight = '700';
+                btn.style.borderRadius = '8px';
+              }
+            });
+
+            // Placeholder input kunci akses
             var inputs = dlg.querySelectorAll('input');
             inputs.forEach(function(inp) {
               if (inp.type === 'text' || inp.type === 'password') {
@@ -413,6 +572,28 @@
               }
             });
           });
+
+          // Modifikasi item 'Sign Out' di dropdown akun agar jelas dan tegas
+          var menuItems = document.querySelectorAll('[role="menuitem"], [role="menu"] button');
+          menuItems.forEach(function(item) {
+            var txt = (item.innerText || '').toLowerCase();
+            var key = item.getAttribute('data-key');
+            if (key === 'sign_out' || txt === 'sign out' || txt.includes('sign out')) {
+              item.innerHTML = '🚪 <span style="font-weight:700; color:#dc2626;">Keluar dari Adarent CMS</span>';
+              item.style.setProperty('color', '#dc2626', 'important');
+              if (!item.dataset.adarentLogoutBound) {
+                item.dataset.adarentLogoutBound = 'true';
+                item.addEventListener('click', function(ev) {
+                  ev.preventDefault();
+                  ev.stopPropagation();
+                  performAdarentLogout();
+                });
+              }
+            }
+          });
+
+          // Pastikan Tombol Logout di Header / Floating Selalu Ada
+          ensureAdarentLogoutButton();
 
           // Sembunyikan link powered-by jika muncul
           var poweredLinks = document.querySelectorAll('a[href*="sveltiacms"], a[href*="decapcms"]');
