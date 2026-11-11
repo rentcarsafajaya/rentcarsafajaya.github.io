@@ -1,12 +1,24 @@
+# ==============================================================
+# ADARENT CMS — SISTEM MANAJEMEN RENTAL & KONTEN LENGKAP
+# Safajaya Trans
+# Powered by Klikada Cloud
+# ==============================================================
+
+app_title: "Adarent CMS"
+site_url: "https://safajaya.com"
+display_url: "https://safajaya.com"
+logo:
+  src: "https://cloud.klikada.com/image/klikada-logo-lingkaran.png"
+  show_in_header: true
+logo_url: "https://cloud.klikada.com/image/klikada-logo-lingkaran.png"
+
 backend:
   name: github
   repo: rentcarsafajaya/rentcarsafajaya.github.io
   branch: master
-  # Gunakan salah satu opsi auth di bawah:
-  # Opsi 1: Cloudflare Worker OAuth proxy (gratis, direkomendasikan untuk GitHub Pages)
-  # base_url: https://sveltia-cms-auth.YOUR-WORKER.workers.dev
-  # Opsi 2: GitHub PAT — login manual via dialog Sveltia CMS (paling mudah untuk 1 user)
-  # Tidak perlu base_url, cukup masukkan PAT di dialog login
+  # Autentikasi: Masukkan Personal Access Token (PAT) GitHub pada dialog login Adarent CMS
+
+local_backend: false
 
 # Folder media upload
 media_folder: images
@@ -15,14 +27,600 @@ public_folder: /images
 # Locale UI (antarmuka CMS dalam Bahasa Indonesia)
 locale: id
 
-# Koleksi konten
+# Koleksi Konten Website
 collections:
   # ==============================================================
-  # ARMADA KENDARAAN (_data-product/)
+  # 1. KELOLA HALAMAN UTAMA WEBSITE (PAGES)
+  # ==============================================================
+  - name: pages
+    label: "📄 Halaman Website (Pages)"
+    editor:
+      preview: false
+    files:
+      # ----------------------------------------------------------
+      # BERANDA (HOMEPAGE)
+      # ----------------------------------------------------------
+      - name: beranda
+        label: "🏠 Halaman Beranda (Homepage)"
+        file: "index.html"
+        fields:
+          - label: "Language"
+            name: language
+            widget: hidden
+            default: id
+
+          - label: "Layout"
+            name: layout
+            widget: hidden
+            default: home
+
+          - label: "Judul SEO (Title Tag)"
+            name: title
+            widget: string
+            hint: "Judul untuk tab browser dan mesin pencari Google (Rekomendasi: 50–60 karakter agar tidak terpotong di Google)."
+
+          - label: "Deskripsi Meta SEO"
+            name: description
+            widget: text
+            hint: "Deskripsi cuplikan hasil pencarian Google (Rekomendasi: 140–160 karakter)."
+
+          - label: "Kata Kunci Meta (Keywords)"
+            name: keyword
+            widget: string
+            hint: "Daftar kata kunci pencarian relevan dipisahkan tanda koma (misal: rental mobil surabaya, sewa mobil surabaya murah, safajaya)."
+
+          - label: "Judul H1 Beranda"
+            name: title-home
+            widget: string
+            hint: "Judul besar yang tampil di bawah slider banner pada halaman beranda."
+
+          - label: "Gambar Preview Beranda (Thumbnail)"
+            name: image
+            widget: image
+            hint: "Ukuran standar default: 600×600 px (Rasio 1:1 Square, format PNG/JPG) atau 1200×630 px (Rasio 1.91:1 untuk preview WhatsApp & Facebook)."
+
+          - label: "Gambar Ilustrasi di Bawah Banner"
+            name: image-under-banner
+            widget: image
+            hint: "Ukuran standar default: 800×450 px (Rasio 16:9 Landscape) atau 600×400 px (Rasio 3:2, format WebP/JPG). Tampil sebagai banner ilustrasi di samping judul beranda."
+
+          - label: "Teks Pengantar Singkat"
+            name: info
+            widget: text
+            hint: "Paragraf ringkasan layanan Safajaya Trans yang tampil di samping/bawah banner utama."
+
+          - label: "Konten Artikel Beranda"
+            name: body
+            widget: markdown
+            hint: "Isi teks artikel lengkap beranda (Keunggulan layanan, fasilitas rental dengan sopir, motivasi, dan armada pilihan)."
+
+      # ----------------------------------------------------------
+      # TENTANG KAMI
+      # ----------------------------------------------------------
+      - name: tentang-kami
+        label: "ℹ️ Halaman Tentang Kami"
+        file: "tentang-kami.html"
+        fields:
+          - label: "Language"
+            name: language
+            widget: hidden
+            default: id
+
+          - label: "Layout"
+            name: layout
+            widget: hidden
+            default: tentang-kami
+
+          # SEO & Header
+          - label: "Judul Halaman (SEO Title)"
+            name: title
+            widget: string
+            hint: "Judul halaman pada tab browser dan breadcrumb. Contoh: Tentang Kami"
+
+          - label: "Deskripsi Meta SEO"
+            name: description
+            widget: text
+            hint: "Deskripsi profil perusahaan untuk Google Search (Rekomendasi: 140–160 karakter)."
+
+          - label: "Kata Kunci Meta (Keywords)"
+            name: keyword
+            widget: string
+            hint: "Kata kunci relevan profil perusahaan, dipisahkan koma."
+
+          # Hero Visual & Motto
+          - label: "Gambar Utama Profil & Layanan"
+            name: image
+            widget: image
+            hint: "📐 UKURAN STANDAR DEFAULT: 1200×750 px atau 800×500 px (Rasio 16:10 Landscape, format WebP/JPG). Gambar ini tampil elegan di kolom kiri hero profil perusahaan dengan badge jaminan mutu."
+
+          - label: "Teks Badge Motto di Bawah Gambar"
+            name: motto-badge
+            widget: string
+            default: "”Customer Satisfaction is Our Goal“ — Komitmen Mutu Layanan Safa Jaya Trans"
+            hint: "Slogan / motto yang melintang di bagian bawah foto hero profil."
+
+          # Hero Intro Kolom Kanan
+          - label: "Label Badge Tag Hero"
+            name: tag-hero
+            widget: string
+            default: "Mitra Perjalanan Anda"
+            hint: "Teks badge kecil di atas judul hero."
+
+          - label: "Judul Besar Hero Profil"
+            name: judul-hero
+            widget: string
+            default: "Solusi Rental & Sewa Mobil Profesional di Surabaya"
+            hint: "Judul utama yang tampil di kartu pengantar samping foto."
+
+          - label: "Deskripsi Singkat Pengantar Hero"
+            name: deskripsi-hero
+            widget: text
+            hint: "Paragraf ringkasan keunggulan Safa Jaya Trans di kolom pengantar."
+
+          - label: "Poin Keunggulan 1"
+            name: checklist-1
+            widget: string
+            default: "Armada Terbaru, Bersih, Wangi & Steril Terawat"
+            hint: "Poin checklist pertama."
+
+          - label: "Poin Keunggulan 2"
+            name: checklist-2
+            widget: string
+            default: "Driver Berpengalaman, Ramah, Sopan & Hafal Rute"
+            hint: "Poin checklist kedua."
+
+          - label: "Poin Keunggulan 3"
+            name: checklist-3
+            widget: string
+            default: "Tepat Waktu dengan Layanan Customer Service 24 Jam"
+            hint: "Poin checklist ketiga."
+
+          - label: "Poin Keunggulan 4"
+            name: checklist-4
+            widget: string
+            default: "Harga Transparan Tanpa Biaya Tersembunyi"
+            hint: "Poin checklist keempat."
+
+          # 4 Feature Value Proposition Cards
+          - label: "Fitur 1 - Judul"
+            name: fitur-1-judul
+            widget: string
+            default: "12+ Pilihan Armada"
+            hint: "Judul kartu fitur 1."
+
+          - label: "Fitur 1 - Deskripsi"
+            name: fitur-1-deskripsi
+            widget: string
+            default: "Mulai dari City Car, MPV Keluarga (Avanza, Xenia, Innova), hingga Luxury Alphard & Microbus HiAce."
+            hint: "Deskripsi singkat fitur 1."
+
+          - label: "Fitur 2 - Judul"
+            name: fitur-2-judul
+            widget: string
+            default: "Driver Profesional"
+            hint: "Judul kartu fitur 2."
+
+          - label: "Fitur 2 - Deskripsi"
+            name: fitur-2-deskripsi
+            widget: string
+            default: "Sopir bersertifikasi, ramah, berpakaian rapi, serta menguasai jalur tercepat dan lokasi wisata."
+            hint: "Deskripsi singkat fitur 2."
+
+          - label: "Fitur 3 - Judul"
+            name: fitur-3-judul
+            widget: string
+            default: "Layanan Siap 24 Jam"
+            hint: "Judul kartu fitur 3."
+
+          - label: "Fitur 3 - Deskripsi"
+            name: fitur-3-deskripsi
+            widget: string
+            default: "Fleksibilitas reservasi dan layanan tanggap darurat kapan pun Anda membutuhkan armada."
+            hint: "Deskripsi singkat fitur 3."
+
+          - label: "Fitur 4 - Judul"
+            name: fitur-4-judul
+            widget: string
+            default: "Tarif Bersahabat"
+            hint: "Judul kartu fitur 4."
+
+          - label: "Fitur 4 - Deskripsi"
+            name: fitur-4-deskripsi
+            widget: string
+            default: "Harga sewa bersaing mulai 200rb-an dengan rincian fasilitas transparan dan tanpa biaya siluman."
+            hint: "Deskripsi singkat fitur 4."
+
+          # Sambutan CEO
+          - label: "Kutipan / Quote CEO"
+            name: ceo-quote
+            widget: string
+            default: "”Customer Satisfaction is Our Goal“"
+            hint: "Kutipan moto resmi dari CEO."
+
+          - label: "Pesan Sambutan CEO"
+            name: ceo-pesan
+            widget: text
+            hint: "Isi paragraf pesan dan komitmen pelayanan dari CEO kepada pelanggan."
+
+          - label: "Nama CEO"
+            name: ceo-nama
+            widget: string
+            default: "Mas Agus"
+            hint: "Nama lengkap CEO / Founder."
+
+          - label: "Jabatan CEO"
+            name: ceo-jabatan
+            widget: string
+            default: "CEO & Founder safajaya.com"
+            hint: "Gelar jabatan."
+
+          # Konten Artikel Lengkap
+          - label: "Konten Artikel Lengkap Profil Perusahaan"
+            name: body
+            widget: markdown
+            hint: "Teks artikel lengkap profil perusahaan, sejarah singkat, fasilitas sewa dengan sopir, dan standar perawatan armada."
+
+      # ----------------------------------------------------------
+      # KONTAK KAMI
+      # ----------------------------------------------------------
+      - name: kontak-kami
+        label: "📞 Halaman Kontak Kami"
+        file: "kontak-kami.html"
+        fields:
+          - label: "Language"
+            name: language
+            widget: hidden
+            default: id
+
+          - label: "Layout"
+            name: layout
+            widget: hidden
+            default: hubungi-kami
+
+          # SEO & Header
+          - label: "Judul Halaman (SEO Title)"
+            name: title
+            widget: string
+            hint: "Judul halaman kontak di browser dan hasil pencarian."
+
+          - label: "Deskripsi Meta SEO"
+            name: description
+            widget: text
+            hint: "Deskripsi nomor kontak, telepon, dan alamat Safajaya Trans (Rekomendasi: 140–160 karakter)."
+
+          - label: "Kata Kunci Meta (Keywords)"
+            name: keyword
+            widget: string
+            hint: "Kata kunci kontak, telepon, WA rental mobil surabaya."
+
+          # Nomor Kontak & Pelayanan
+          - label: "Nomor WhatsApp CS 1 (Utama)"
+            name: wa-cs1
+            widget: string
+            default: "0812-3422-0073"
+            hint: "Nomor WhatsApp CS utama yang tampil di kartu kontak."
+
+          - label: "Link URL WhatsApp CS 1"
+            name: wa-cs1-link
+            widget: string
+            default: "https://api.whatsapp.com/send?phone=6281234220073&text=Halo%20Safa%20Jaya%20Trans,%20saya%20mau%20konsultasi%20sewa%20mobil%20di%20Surabaya"
+            hint: "Tautan URL API WhatsApp CS 1 beserta pesan pembuka otomatis."
+
+          - label: "Nomor WhatsApp CS 2 (Reservasi)"
+            name: wa-cs2
+            widget: string
+            default: "0823-3221-7774"
+            hint: "Nomor WhatsApp CS kedua."
+
+          - label: "Link URL WhatsApp CS 2"
+            name: wa-cs2-link
+            widget: string
+            default: "https://api.whatsapp.com/send?phone=6282332217774&text=Halo%20Safa%20Jaya%20Trans,%20saya%20mau%20tanya%20jadwal%20sewa%20mobil"
+            hint: "Tautan URL API WhatsApp CS 2."
+
+          - label: "Nomor Telepon Langsung"
+            name: telepon
+            widget: string
+            default: "0812-3422-0073"
+            hint: "Nomor telepon untuk panggilan seluler langsung 24 jam."
+
+          - label: "Alamat Email Resmi"
+            name: email
+            widget: string
+            default: "cs@safajaya.com"
+            hint: "Email korespondensi resmi perusahaan."
+
+          # Informasi Alamat & Operasional
+          - label: "Alamat Kantor & Pool Armada"
+            name: alamat
+            widget: string
+            default: "Jl. Medokan Sawah Timur Gg IV No 74, Kelurahan Medokan Ayu, Kecamatan Rungkut, Kota Surabaya, Jawa Timur 60295"
+            hint: "Alamat fisik lengkap kantor dan tempat kumpul unit mobil."
+
+          - label: "Jam Operasional Layanan"
+            name: jam-operasional
+            widget: string
+            default: "Buka 24 Jam Non-stop setiap hari (Termasuk Hari Minggu & Libur Nasional)"
+            hint: "Jadwal jam buka pelayanan armada."
+
+          - label: "Area Layanan Antar Jemput"
+            name: area-layanan
+            widget: string
+            default: "Bandara Internasional Juanda (T1 & T2), Stasiun Gubeng, Stasiun Pasar Turi, Hotel, Apartemen, dan Seluruh Wilayah Surabaya & Sidoarjo"
+            hint: "Cakupan titik penjemputan dan pengantaran armada."
+
+          - label: "Metode Pembayaran"
+            name: metode-pembayaran
+            widget: string
+            default: "Transfer Bank (BCA, Mandiri, BRI, BNI), atau Cash / Tunai kepada Driver saat armada tiba di lokasi"
+            hint: "Metode pembayaran yang diterima."
+
+          # Visual & Langkah Pemesanan
+          - label: "Gambar Visual Armada & Kantor"
+            name: image
+            widget: image
+            hint: "📐 UKURAN STANDAR DEFAULT: 1200×750 px atau 800×500 px (Rasio 16:10 Landscape, format WebP/JPG). Gambar ini tampil berdampingan dengan informasi operasional dan panduan booking."
+
+          - label: "Teks Badge di Atas Gambar"
+            name: badge-visual
+            widget: string
+            default: "★ Armada Bersih, AC Dingin & Driver Siap Melayani 24 Jam"
+            hint: "Teks badge penegas keunggulan pada gambar."
+
+          - label: "Panduan Pemesanan - Langkah 1"
+            name: langkah-1
+            widget: string
+            default: "Pilih unit mobil yang Anda butuhkan di halaman Daftar Harga."
+            hint: "Instruksi langkah pertama."
+
+          - label: "Panduan Pemesanan - Langkah 2"
+            name: langkah-2
+            widget: string
+            default: "Tentukan tanggal, jam penjemputan, durasi sewa, dan tujuan rute perjalanan."
+            hint: "Instruksi langkah kedua."
+
+          - label: "Panduan Pemesanan - Langkah 3"
+            name: langkah-3
+            widget: string
+            default: "Kirim rincian jadwal via WhatsApp untuk konfirmasi ketersediaan armada dalam 5 menit."
+            hint: "Instruksi langkah ketiga."
+
+          # Google Maps Links
+          - label: "Tautan Langsung Google Maps (Navigasi GPS)"
+            name: google-maps-url
+            widget: string
+            default: "https://maps.google.com/?q=place_id:ChIJSdI5tmb71y0RHq1F_d2DJc0"
+            hint: "Link untuk membuka lokasi langsung di aplikasi Google Maps HP pengguna."
+
+          - label: "URL Iframe Embed Google Maps"
+            name: google-maps-embed
+            widget: string
+            default: "https://www.google.com/maps/embed/v1/place?q=place_id:ChIJSdI5tmb71y0RHq1F_d2DJc0&key=AIzaSyCNCZ0Twm_HFRaZ5i-FuPDYs3rLwm4_848"
+            hint: "URL iframe peta Google Maps yang tertanam di halaman."
+
+          # Konten Tambahan (Markdown)
+          - label: "Konten Tambahan / Catatan Khusus"
+            name: body
+            widget: markdown
+            required: false
+            hint: "Tuliskan catatan tambahan, informasi promo penjemputan, atau pengumuman khusus yang akan tampil rapi di bawah peta lokasi Google Maps (opsional)."
+
+      # ----------------------------------------------------------
+      # TARIF & HARGA SEWA
+      # ----------------------------------------------------------
+      - name: harga
+        label: "🏷️ Halaman Tarif & Harga Sewa"
+        file: "harga.html"
+        fields:
+          - label: "Language"
+            name: language
+            widget: hidden
+            default: id
+
+          - label: "Layout"
+            name: layout
+            widget: hidden
+            default: product
+
+          - label: "Judul Halaman (SEO Title)"
+            name: title
+            widget: string
+            hint: "Judul halaman katalog harga (contoh: Harga Rental Mobil di Surabaya Termurah)."
+
+          - label: "Deskripsi Meta SEO"
+            name: description
+            widget: text
+            hint: "Deskripsi penawaran tarif sewa mobil untuk Google Search."
+
+          - label: "Kata Kunci Meta (Keywords)"
+            name: keyword
+            widget: string
+            hint: "Kata kunci tarif rental mobil surabaya."
+
+          - label: "Gambar Preview Halaman"
+            name: image
+            widget: image
+            hint: "📐 UKURAN STANDAR DEFAULT: 1200×630 px (Rasio 1.91:1) atau 800×500 px (format WebP/JPG) untuk preview dan share media sosial."
+
+          - label: "Teks Pengantar Informasi Tarif"
+            name: info
+            widget: text
+            hint: "Paragraf pengantar di bagian atas daftar harga sebelum kartu armada mobil."
+
+      # ----------------------------------------------------------
+      # TESTIMONI
+      # ----------------------------------------------------------
+      - name: testimoni-page
+        label: "⭐ Halaman Indeks Testimoni"
+        file: "testimoni.html"
+        fields:
+          - label: "Language"
+            name: language
+            widget: hidden
+            default: id
+
+          - label: "Layout"
+            name: layout
+            widget: hidden
+            default: testimoni
+
+          - label: "Judul Halaman (SEO Title)"
+            name: title
+            widget: string
+            hint: "Judul halaman indeks ulasan konsumen."
+
+          - label: "Deskripsi Singkat SEO"
+            name: description
+            widget: text
+            hint: "Deskripsi singkat ulasan kepuasan konsumen untuk Google Search."
+
+          - label: "Deskripsi Lengkap Pengantar"
+            name: description-panjang
+            widget: text
+            hint: "Paragraf pengantar lengkap yang tampil di atas kartu ulasan pelanggan."
+
+          - label: "Kata Kunci Meta (Keywords)"
+            name: keyword
+            widget: string
+            hint: "Kata kunci review, testimoni, kepuasan rental mobil."
+
+          - label: "Gambar Preview Halaman"
+            name: image
+            widget: image
+            hint: "📐 UKURAN STANDAR DEFAULT: 800×600 px (Rasio 4:3) atau 1200×630 px (format WebP/PNG)."
+
+      # ----------------------------------------------------------
+      # BLOG & BERITA
+      # ----------------------------------------------------------
+      - name: blog-page
+        label: "📰 Halaman Indeks Blog & Berita"
+        file: "blog.html"
+        fields:
+          - label: "Language"
+            name: language
+            widget: hidden
+            default: id
+
+          - label: "Layout"
+            name: layout
+            widget: hidden
+            default: blog
+
+          - label: "Judul Halaman (SEO Title)"
+            name: title
+            widget: string
+            hint: "Judul halaman direktori artikel blog (misal: Blog dan Berita)."
+
+          - label: "Deskripsi Singkat SEO"
+            name: description
+            widget: text
+            hint: "Deskripsi singkat seputar informasi tips dan otomotif."
+
+          - label: "Deskripsi Lengkap Pengantar"
+            name: description-panjang
+            widget: text
+            hint: "Paragraf pengantar lengkap kumpulan artikel beserta panduan kontak pemesanan."
+
+          - label: "Kata Kunci Meta (Keywords)"
+            name: keyword
+            widget: string
+            hint: "Kata kunci blog, tips wisata, berita otomotif."
+
+          - label: "Gambar Preview Halaman"
+            name: image
+            widget: image
+            hint: "📐 UKURAN STANDAR DEFAULT: 1200×630 px atau 800×500 px (format WebP/PNG)."
+
+      # ----------------------------------------------------------
+      # SYARAT DAN KETENTUAN
+      # ----------------------------------------------------------
+      - name: syarat-ketentuan
+        label: "📜 Halaman Syarat & Ketentuan"
+        file: "syarat-dan-ketentuan.html"
+        fields:
+          - label: "Language"
+            name: language
+            widget: hidden
+            default: id
+
+          - label: "Layout"
+            name: layout
+            widget: hidden
+            default: TOS
+
+          - label: "Judul Halaman (SEO Title)"
+            name: title
+            widget: string
+            hint: "Judul dokumen aturan pemakaian layanan (misal: Syarat dan Ketentuan safajaya.com)."
+
+          - label: "Deskripsi Meta SEO"
+            name: description
+            widget: text
+            hint: "Deskripsi ringkas aturan dan ketentuan penggunaan layanan rental mobil."
+
+          - label: "Kata Kunci Meta (Keywords)"
+            name: keyword
+            widget: string
+            hint: "Kata kunci syarat sewa mobil surabaya."
+
+          - label: "Gambar Preview Halaman"
+            name: image
+            widget: image
+            hint: "📐 UKURAN STANDAR DEFAULT: 1200×630 px atau 800×500 px (format WebP/JPG)."
+
+          - label: "Isi Klausul Syarat & Ketentuan"
+            name: body
+            widget: markdown
+            hint: "Isi teks lengkap peraturan, tata cara reservasi, kewajiban, dan ketentuan penyewaan."
+
+      # ----------------------------------------------------------
+      # KEBIJAKAN PRIVASI
+      # ----------------------------------------------------------
+      - name: kebijakan-privasi
+        label: "🔒 Halaman Kebijakan Privasi"
+        file: "kebijakan-privasi.html"
+        fields:
+          - label: "Language"
+            name: language
+            widget: hidden
+            default: id
+
+          - label: "Layout"
+            name: layout
+            widget: hidden
+            default: TOS
+
+          - label: "Judul Halaman (SEO Title)"
+            name: title
+            widget: string
+            hint: "Judul dokumen privasi (misal: Kebijakan dan Privasi)."
+
+          - label: "Deskripsi Meta SEO"
+            name: description
+            widget: text
+            hint: "Deskripsi kebijakan perlindungan data pribadi dan cookie pengguna."
+
+          - label: "Kata Kunci Meta (Keywords)"
+            name: keyword
+            widget: string
+            hint: "Kata kunci kebijakan privasi, perlindungan data."
+
+          - label: "Gambar Preview Halaman"
+            name: image
+            widget: image
+            hint: "📐 UKURAN STANDAR DEFAULT: 1200×630 px atau 800×500 px (format WebP/JPG)."
+
+          - label: "Isi Dokumen Kebijakan Privasi"
+            name: body
+            widget: markdown
+            hint: "Isi teks lengkap kebijakan privasi, pengumpulan data, penggunaan cookie, dan lisensi konten."
+
+  # ==============================================================
+  # 2. ARMADA KENDARAAN (_data-product/)
   # ==============================================================
   - name: data-product
-    label: Armada Kendaraan
-    label_singular: Kendaraan
+    label: "🚗 Armada Kendaraan"
+    label_singular: "Kendaraan"
     folder: _data-product
     create: true
     delete: true
@@ -40,81 +638,48 @@ collections:
         widget: hidden
         default: product-item
 
-      - label: "Nomor Urut (untuk nama file)"
+      - label: "Nomor Urut Tampil"
         name: nomor-urut
         widget: number
-        hint: "Angka urutan untuk nama file, misal: 1, 2, 3, dst."
+        hint: "Angka posisi urutan mobil di katalog beranda (1 s/d 12). Angka ini juga menjadi awalan nama file slug."
         value_type: int
 
-      - label: "Gambar Kendaraan"
+      - label: "Foto Mobil (PNG Transparan)"
         name: image
         widget: image
-        hint: "Gambar utama produk (format PNG/JPG, rasio 1:1)"
+        hint: "📐 UKURAN STANDAR DEFAULT: 600×600 px hingga 800×800 px (Rasio 1:1 Persegi/Square). Wajib berformat PNG transparan berkualitas tinggi dengan objek mobil berada di tengah (center), tidak terpotong di tepi, agar proporsional dan selaras di semua kartu produk dan halaman detail."
 
-      - label: "Permalink (URL)"
-        name: permalink
-        widget: string
-        hint: "Contoh: /rental-mobil-xenia/"
-        pattern: ["^\\/[a-z0-9\\-]+\\/$", "Harus diawali dan diakhiri dengan / (misal: /rental-mobil-xenia/)"]
-
-      - label: "Judul SEO"
-        name: title
-        widget: string
-        hint: "Judul halaman untuk mesin pencari"
-
-      - label: "Kata Kunci SEO"
-        name: keyword
-        widget: string
-
-      - label: "Deskripsi SEO"
-        name: description
-        widget: text
-
-      - label: "Nama Produk (singkat)"
+      - label: "Nama Mobil (Singkat)"
         name: nama-produk
         widget: string
-        hint: "Nama pendek, contoh: Xenia"
+        hint: "Nama singkat kendaraan yang tampil menonjol pada kartu produk dan pesan otomatis WhatsApp. Contoh: Avanza, Xenia, Veloz, Innova Reborn, Innova Zenix V, HiAce, Premio, Alphard."
 
-      - label: "Nama Produk Lengkap"
+      - label: "Nama Mobil Resmi (Lengkap)"
         name: nama-produk-asli
         widget: string
-        hint: "Nama lengkap, contoh: Daihatsu Xenia"
+        hint: "Nama lengkap mobil beserta pabrikan untuk judul halaman detail dan Google Schema SEO. Contoh: Daihatsu Xenia 1.3 MT, Toyota All New Avanza, Toyota HiAce Commuter."
 
-      - label: "SKU"
-        name: sku
-        widget: string
-        hint: "Kode produk unik, contoh: DAIHATSU-XENIA-6-HTM-001"
-
-      - label: "GTIN8"
-        name: gtin8
-        widget: string
-        required: false
-
-      - label: "Harga Valid Sampai (priceValidUntil)"
-        name: priceValidUntil
-        widget: string
-        required: false
-        hint: "Format: YYYYMMDD, contoh: 20251231"
-
-      - label: "Harga Schema (angka saja, tanpa titik)"
-        name: harga-schema
-        widget: number
-        hint: "Digunakan untuk schema.org, contoh: 550000"
-
-      - label: "Harga Tampil"
+      - label: "Harga Tampilan (Tanpa 'Rp')"
         name: harga
         widget: string
-        hint: "Format tampilan, contoh: 550.000 atau Harga Call"
+        hint: "Format teks harga sewa yang dilihat pengunjung. Contoh: 550.000 atau 'Harga Call' (jangan ketik 'Rp' karena sudah otomatis terpasang)."
 
-      - label: "Promo MURAH (tampilkan ribbon)"
+      - label: "Harga Schema Google (Angka Murni)"
+        name: harga-schema
+        widget: number
+        hint: "Nilai nominal angka bulat murni tanpa tanda titik atau koma untuk Rich Snippet Google. Contoh: 550000"
+
+      - label: "Badge Ribbon 'MURAH'"
         name: murah
         widget: boolean
         default: false
         required: false
+        hint: "Centang untuk menampilkan pita melintang 'MURAH' dengan warna mencolok di sudut kanan atas kartu mobil."
 
       - label: "Jenis Kendaraan"
         name: jenis-kendaraan
         widget: select
+        hint: "Pilih kategori klasifikasi mobil"
         options:
           - Mini MPV
           - MPV
@@ -130,19 +695,21 @@ collections:
           - Sedan
           - Lainnya
 
-      - label: "Kapasitas Tempat Duduk"
+      - label: "Kapasitas Tempat Duduk (Penumpang)"
         name: tempat-duduk
         widget: number
+        hint: "Jumlah kursi maksimal penumpang. Contoh: 7 untuk Avanza/Innova, 16 untuk HiAce, 4 untuk sedan/city car."
 
       - label: "Label Durasi"
         name: durasi
         widget: hidden
         default: Durasi
 
-      - label: "Keterangan Durasi"
+      - label: "Keterangan Durasi Pemakaian"
         name: ket-durasi
         widget: string
         default: "12 Jam"
+        hint: "Durasi pemakaian sewa standar. Contoh: '12 Jam' atau 'Full Day 24 Jam'."
 
       - label: "Label Fasilitas"
         name: fasilitas
@@ -153,43 +720,87 @@ collections:
         name: ket-fasilitas-1
         widget: string
         default: "Mobil"
+        hint: "Fasilitas pertama yang termasuk dalam paket sewa (contoh: Mobil)."
 
       - label: "Fasilitas 2"
         name: ket-fasilitas-2
         widget: string
         default: "Driver BBM"
+        hint: "Fasilitas kedua yang termasuk dalam paket (contoh: Driver BBM, Driver Only, atau Driver Luar Kota)."
 
       - label: "Label Rute"
         name: rute
         widget: hidden
         default: Rute
 
-      - label: "Rute Utama"
+      - label: "Rute Utama Pemakaian"
         name: ket-rute
         widget: string
         default: "Area Surabaya"
+        hint: "Cakupan wilayah standar perjalanan (contoh: Area Surabaya atau Surabaya - Sidoarjo)."
 
-      - label: "Info Luar Kota"
+      - label: "Ketentuan Pemakaian Luar Kota"
         name: ex-rute
         widget: string
         required: false
         default: "Pemakaian luar kota harga call"
+        hint: "Penjelasan tarif bila unit dibawa keluar kota (contoh: Pemakaian luar kota harga call)."
 
-      - label: "Deskripsi Singkat Artikel"
+      - label: "Permalink (Alamat URL)"
+        name: permalink
+        widget: string
+        hint: "URL permanen mobil. Wajib diawali dan diakhiri dengan garis miring (/). Contoh: /rental-mobil-xenia/"
+        pattern: ["^\\/[a-z0-9\\-]+\\/$", "Harus diawali dan diakhiri garis miring, huruf kecil dan strip (contoh: /rental-mobil-xenia/)"]
+
+      - label: "Kode SKU Produk"
+        name: sku
+        widget: string
+        hint: "Kode unik inventaris mobil. Contoh: DAIHATSU-XENIA-001 atau TOYOTA-INNOVA-002"
+
+      - label: "Kode Barcode GTIN8"
+        name: gtin8
+        widget: string
+        required: false
+        hint: "Kode GTIN-8 (opsional untuk integrasi Google Shopping)."
+
+      - label: "Masa Berlaku Harga (priceValidUntil)"
+        name: priceValidUntil
+        widget: string
+        required: false
+        hint: "Format tanggal: YYYYMMDD (contoh: 20261231)."
+
+      - label: "Judul SEO (Title)"
+        name: title
+        widget: string
+        hint: "Judul yang tampil di tab browser dan Google (Rekomendasi: 50–60 karakter). Contoh: Rental Mobil Xenia Surabaya Murah Rp550rb/Hari"
+
+      - label: "Kata Kunci Meta (Keywords)"
+        name: keyword
+        widget: string
+        hint: "Kumpulan kata kunci pencarian mobil dipisahkan dengan koma."
+
+      - label: "Deskripsi Meta SEO"
+        name: description
+        widget: text
+        hint: "Deskripsi penawaran sewa mobil untuk cuplikan Google (Rekomendasi: 140–160 karakter)."
+
+      - label: "Ringkasan Singkat (Collapsible)"
         name: artikel
         widget: text
         required: false
+        hint: "Teks ringkasan fitur mobil yang muncul pada tombol 'Baca Selengkapnya' di halaman detail produk."
 
-      - label: "Konten Halaman"
+      - label: "Konten Deskripsi Lengkap Armada"
         name: body
         widget: markdown
+        hint: "Ulasan lengkap spesifikasi mesin, kenyamanan interior, ruang bagasi, dan alasan tepat memilih kendaraan ini."
 
   # ==============================================================
-  # TESTIMONI PELANGGAN (_data-client/)
+  # 3. TESTIMONI PELANGGAN (_data-client/)
   # ==============================================================
   - name: data-client
-    label: Testimoni Pelanggan
-    label_singular: Testimoni
+    label: "⭐ Testimoni Pelanggan"
+    label_singular: "Testimoni"
     folder: _data-client
     create: true
     delete: true
@@ -207,73 +818,81 @@ collections:
         widget: hidden
         default: testimoni-item
 
-      - label: "Urutan Tampil"
+      - label: "Nomor Urut Tampil"
         name: data-key
         widget: number
         required: false
+        hint: "Urutan penayangan testimoni di beranda/halaman ulasan."
 
-      - label: "Foto / Gambar"
+      - label: "Foto Pelanggan / Unit Mobil"
         name: image
         widget: image
         required: false
-        hint: "Foto mobil atau ilustrasi (opsional)"
+        hint: "📐 UKURAN STANDAR DEFAULT: 500×500 px atau 600×600 px (Rasio 1:1 Persegi/Square, format JPG/PNG/WebP). Foto serah terima unit bersama pelanggan atau logo perusahaan penyewa."
 
-      - label: "Nama Pelanggan"
+      - label: "Nama Pelanggan / Klien"
         name: nama-client
         widget: string
+        hint: "Nama lengkap konsumen atau instansi yang memberikan ulasan."
 
-      - label: "Unit yang Disewa"
+      - label: "Unit Mobil yang Disewa"
         name: nama-unit
         widget: string
-        hint: "Contoh: Toyota Avanza"
+        hint: "Tipe mobil yang digunakan penyewa. Contoh: Toyota Avanza, Toyota HiAce Premio, Toyota Innova Reborn."
 
-      - label: "Tanggal Sewa"
+      - label: "Tanggal Pemakaian / Sewa"
         name: tanggal-beli
         widget: datetime
         format: "YYYY-MM-DD"
         date_format: "YYYY-MM-DD"
         time_format: false
+        hint: "Pilih tanggal saat layanan sewa berlangsung."
 
-      - label: "Judul Komentar"
+      - label: "Judul Singkat Ulasan"
         name: judul-komentar
         widget: string
+        hint: "Kesimpulan singkat pengalaman pelanggan (contoh: 'Mobil Sangat Bersih, Sopir Ramah & Tepat Waktu')."
 
-      - label: "Deskripsi SEO"
-        name: description
-        widget: text
-        required: false
-
-      - label: "Kata Kunci SEO"
-        name: keyword
-        widget: string
-        required: false
-
-      - label: "Rating (1–5 bintang)"
+      - label: "Rating Bintang Kepuasan (1–5)"
         name: rating
         widget: select
+        hint: "Pilih jumlah bintang kepuasan pelanggan"
         options:
-          - label: "⭐ 1 Bintang"
+          - label: "⭐ 1 Bintang (Kurang)"
             value: 1
-          - label: "⭐⭐ 2 Bintang"
+          - label: "⭐⭐ 2 Bintang (Cukup)"
             value: 2
-          - label: "⭐⭐⭐ 3 Bintang"
+          - label: "⭐⭐⭐ 3 Bintang (Baik)"
             value: 3
-          - label: "⭐⭐⭐⭐ 4 Bintang"
+          - label: "⭐⭐⭐⭐ 4 Bintang (Sangat Baik)"
             value: 4
-          - label: "⭐⭐⭐⭐⭐ 5 Bintang"
+          - label: "⭐⭐⭐⭐⭐ 5 Bintang (Puas / Sempurna)"
             value: 5
         default: 5
 
-      - label: "Komentar Pelanggan"
+      - label: "Isi Komentar / Testimoni Lengkap"
         name: komentar
         widget: text
+        hint: "Teks ulasan lengkap yang menceritakan pengalaman memuaskan menggunakan jasa sewa Safajaya Trans."
+
+      - label: "Deskripsi Meta SEO"
+        name: description
+        widget: text
+        required: false
+        hint: "Deskripsi SEO untuk halaman detail ulasan."
+
+      - label: "Kata Kunci Meta (Keywords)"
+        name: keyword
+        widget: string
+        required: false
+        hint: "Kata kunci ulasan sewa mobil surabaya."
 
   # ==============================================================
-  # BLOG & ARTIKEL (_posts/)
+  # 4. BLOG & ARTIKEL BERITA (_posts/)
   # ==============================================================
   - name: posts
-    label: "Blog & Artikel"
-    label_singular: Artikel
+    label: "📰 Blog & Artikel Berita"
+    label_singular: "Artikel"
     folder: _posts
     create: true
     delete: true
@@ -291,19 +910,104 @@ collections:
         widget: hidden
         default: post
 
-      - label: "Urutan"
+      - label: "Nomor Urut (Opsional)"
         name: data-key
         widget: number
         required: false
 
-      - label: "Gambar Artikel"
+      - label: "Gambar Utama Artikel"
         name: image
         widget: image
-        hint: "Gambar thumbnail artikel"
+        hint: "📐 UKURAN STANDAR DEFAULT: 1200×675 px atau 800×450 px (Rasio 16:9 Landscape) atau 900×600 px (Rasio 3:2, format WebP/JPG). Gambar ini tampil sebagai thumbnail kartu berita dan gambar utama header postingan."
+
+      - label: "Judul Artikel Blog"
+        name: judul-post
+        widget: string
+        hint: "Judul artikel yang menarik minat pembaca (Rekomendasi: 50–70 karakter)."
 
       - label: "Nama Penulis"
         name: nama-penulis
         widget: string
+        hint: "Nama penulis artikel (contoh: Denny Rakhmad Widi Ashari)."
+
+      - label: "Kategori / Kolom Label"
+        name: kolom
+        widget: select
+        hint: "Kategori badge pada kartu artikel"
+        options:
+          - TIPS
+          - NEWS
+          - INFO
+
+      - label: "Tanggal Publikasi"
+        name: date
+        widget: datetime
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+        hint: "Tanggal artikel diterbitkan."
+
+      - label: "Tanggal Pembaruan (Opsional)"
+        name: modified-date
+        widget: datetime
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+        required: false
+        hint: "Tanggal saat isi artikel diperbarui."
+
+      - label: "Deskripsi Meta SEO"
+        name: description
+        widget: text
+        hint: "Deskripsi ringkas cuplikan Google Search (Rekomendasi: 140–160 karakter)."
+
+      - label: "Kata Kunci Meta (Keywords)"
+        name: keyword
+        widget: string
+        hint: "Kata kunci topik artikel, pisahkan dengan tanda koma."
+
+      - label: "Isi Konten Artikel Lengkap"
+        name: body
+        widget: markdown
+        hint: "Tulis isi artikel lengkap menggunakan Markdown (gunakan Heading 2, paragraf, daftar list, dan gambar ilustrasi pendukung)."
+
+  # ==============================================================
+  # 5. ARTIKEL KHUSUS LAYANAN & SEO (_data-artikel/)
+  # ==============================================================
+  - name: data-artikel
+    label: "🎯 Artikel Layanan & SEO"
+    label_singular: "Artikel SEO"
+    folder: _data-artikel
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - label: "Language"
+        name: language
+        widget: hidden
+        default: id
+
+      - label: "Layout"
+        name: layout
+        widget: hidden
+        default: SEO
+
+      - label: "Judul SEO (Title Tag)"
+        name: title
+        widget: string
+        hint: "Judul artikel pilar untuk tab browser dan Google (contoh: Rental / Sewa Mobil Surabaya Murah Mulai Rp200rb/hari)."
+
+      - label: "Judul H1 Halaman"
+        name: title-h1
+        widget: string
+        hint: "Judul besar yang tampil di bagian atas artikel."
+
+      - label: "Nama Penulis"
+        name: nama-penulis
+        widget: string
+        hint: "Nama penulis artikel (contoh: Denny Rakhmad Widi Ashari)."
 
       - label: "Tanggal Terbit"
         name: date
@@ -320,123 +1024,188 @@ collections:
         time_format: false
         required: false
 
-      - label: "Judul Artikel"
-        name: judul-post
-        widget: string
+      - label: "Gambar Utama Artikel"
+        name: image
+        widget: image
+        hint: "📐 UKURAN STANDAR DEFAULT: 1200×800 px atau 900×600 px (Rasio 3:2 Landscape, format WebP/JPG) untuk gambar pilar artikel SEO."
 
-      - label: "Kolom / Kategori"
-        name: kolom
-        widget: select
-        options:
-          - TIPS
-          - NEWS
-          - INFO
-
-      - label: "Deskripsi SEO"
+      - label: "Deskripsi Meta SEO"
         name: description
         widget: text
+        hint: "Deskripsi lengkap dengan nomor kontak dan ringkasan layanan untuk cuplikan Google (140–160 karakter)."
 
-      - label: "Kata Kunci SEO"
+      - label: "Kata Kunci Meta (Keywords)"
         name: keyword
         widget: string
+        hint: "Kata kunci SEO utama dan turunan dipisahkan koma."
 
-      - label: "Konten Artikel"
+      - label: "Konten Artikel SEO Lengkap"
         name: body
         widget: markdown
+        hint: "Isi artikel lengkap dengan heading H2, daftar isi internal link, dan ulasan mendalam seputar rental mobil surabaya."
 
   # ==============================================================
-  # SLIDER DESKTOP (_data-slider-desktop/) — file-based
+  # 6. SLIDER BANNER DESKTOP PC (_data-slider-desktop/)
   # ==============================================================
   - name: slider-desktop
-    label: "Slider Banner Desktop"
+    label: "🖥️ Slider Banner Desktop (PC)"
     editor:
       preview: false
     files:
-      - label: "Banner Desktop 1"
+      - label: "Banner Desktop 1 (Promo Utama)"
         name: banner-desktop-1
         file: _data-slider-desktop/banner-1.md
         fields:
-          - label: "Gambar Banner"
+          - label: "Gambar Banner Desktop"
             name: amp-img
             widget: image
-            hint: "Rekomendasi ukuran: 980×320 px (format WebP/JPG)"
-          - label: "Lebar (width)"
+            hint: "📐 UKURAN STANDAR DEFAULT: 980×320 px (Rasio ~3:1 Landscape, atau 1960×640 px untuk layar Retina HD). Format disarankan WebP atau JPG terkompresi. Banner ini tampil otomatis pada layar PC, Laptop, dan Tablet horisontal."
+          - label: "Lebar Render (width)"
             name: width
             widget: number
             default: 980
-          - label: "Tinggi (height)"
+            hint: "Nilai lebar render AMP (default: 980)"
+          - label: "Tinggi Render (height)"
             name: height
             widget: number
             default: 320
-          - label: "Teks Alt"
+            hint: "Nilai tinggi render AMP (default: 320)"
+          - label: "Teks Alternatif (Alt)"
             name: alt
             widget: string
+            hint: "Deskripsi gambar untuk aksesibilitas dan SEO Google Image."
 
-      - label: "Banner Desktop 2"
+      - label: "Banner Desktop 2 (Promo Tambahan)"
         name: banner-desktop-2
         file: _data-slider-desktop/banner-2.md
         fields:
-          - label: "Gambar Banner"
+          - label: "Gambar Banner Desktop"
             name: amp-img
             widget: image
-            hint: "Rekomendasi ukuran: 980×320 px (format WebP/JPG)"
-          - label: "Lebar (width)"
+            hint: "📐 UKURAN STANDAR DEFAULT: 980×320 px (Rasio ~3:1 Landscape, atau 1960×640 px untuk layar Retina HD). Format disarankan WebP atau JPG terkompresi."
+          - label: "Lebar Render (width)"
             name: width
             widget: number
             default: 980
-          - label: "Tinggi (height)"
+            hint: "Nilai lebar render AMP (default: 980)"
+          - label: "Tinggi Render (height)"
             name: height
             widget: number
             default: 320
-          - label: "Teks Alt"
+            hint: "Nilai tinggi render AMP (default: 320)"
+          - label: "Teks Alternatif (Alt)"
             name: alt
             widget: string
+            hint: "Deskripsi gambar untuk aksesibilitas dan SEO Google Image."
 
   # ==============================================================
-  # SLIDER MOBILE (_data-slider-mobile/) — file-based
+  # 7. SLIDER BANNER MOBILE HP (_data-slider-mobile/)
   # ==============================================================
   - name: slider-mobile
-    label: "Slider Banner Mobile"
+    label: "📱 Slider Banner Mobile (HP)"
     editor:
       preview: false
     files:
-      - label: "Banner Mobile 1"
+      - label: "Banner Mobile 1 (Promo Utama HP)"
         name: banner-mobile-1
         file: _data-slider-mobile/banner-1.md
         fields:
-          - label: "Gambar Banner"
+          - label: "Gambar Banner Mobile"
             name: amp-img
             widget: image
-            hint: "Rekomendasi ukuran: 480×320 px (format WebP/JPG)"
-          - label: "Lebar (width)"
+            hint: "📐 UKURAN STANDAR DEFAULT: 320×480 px (Rasio 2:3 Vertikal/Portrait Smartphone, atau 640×960 px untuk layar HP Retina tajam). Format disarankan WebP atau JPG. Banner ini tampil khusus pada layar smartphone."
+          - label: "Lebar Render (width)"
             name: width
             widget: number
-            default: 480
-          - label: "Tinggi (height)"
+            default: 320
+            hint: "Nilai lebar render AMP (default: 320)"
+          - label: "Tinggi Render (height)"
             name: height
             widget: number
-            default: 320
-          - label: "Teks Alt"
+            default: 480
+            hint: "Nilai tinggi render AMP (default: 480)"
+          - label: "Teks Alternatif (Alt)"
             name: alt
             widget: string
+            hint: "Deskripsi gambar banner untuk aksesibilitas dan SEO."
 
-      - label: "Banner Mobile 2"
+      - label: "Banner Mobile 2 (Promo Tambahan HP)"
         name: banner-mobile-2
         file: _data-slider-mobile/banner-2.md
         fields:
-          - label: "Gambar Banner"
+          - label: "Gambar Banner Mobile"
             name: amp-img
             widget: image
-            hint: "Rekomendasi ukuran: 480×320 px (format WebP/JPG)"
-          - label: "Lebar (width)"
+            hint: "📐 UKURAN STANDAR DEFAULT: 320×480 px (Rasio 2:3 Vertikal/Portrait Smartphone, atau 640×960 px untuk layar HP Retina tajam). Format disarankan WebP atau JPG."
+          - label: "Lebar Render (width)"
             name: width
             widget: number
-            default: 480
-          - label: "Tinggi (height)"
+            default: 320
+            hint: "Nilai lebar render AMP (default: 320)"
+          - label: "Tinggi Render (height)"
             name: height
             widget: number
-            default: 320
-          - label: "Teks Alt"
+            default: 480
+            hint: "Nilai tinggi render AMP (default: 480)"
+          - label: "Teks Alternatif (Alt)"
             name: alt
             widget: string
+            hint: "Deskripsi gambar banner untuk aksesibilitas dan SEO."
 
+  # ==============================================================
+  # 8. ARSIP URL & HALAMAN LAMA (_data-stok-lama/)
+  # ==============================================================
+  - name: data-stok-lama
+    label: "🗄️ Arsip URL Lama (SEO)"
+    label_singular: "Arsip"
+    folder: _data-stok-lama
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - label: "Language"
+        name: language
+        widget: hidden
+        default: id
+
+      - label: "Layout"
+        name: layout
+        widget: hidden
+        default: SEO
+
+      - label: "Permalink (URL Khusus)"
+        name: permalink
+        widget: string
+        hint: "URL permanen khusus untuk mencegah broken link 404 dari URL lama."
+
+      - label: "Judul Halaman (Title)"
+        name: title
+        widget: string
+        hint: "Judul SEO halaman arsip."
+
+      - label: "Judul H1"
+        name: title-h1
+        widget: string
+        required: false
+
+      - label: "Gambar Ilustrasi"
+        name: image
+        widget: image
+        hint: "📐 UKURAN STANDAR DEFAULT: 1200×800 px atau 900×600 px (Rasio 3:2, format WebP/JPG)."
+
+      - label: "Deskripsi Meta SEO"
+        name: description
+        widget: text
+        hint: "Deskripsi meta untuk mesin pencari."
+
+      - label: "Kata Kunci Meta (Keywords)"
+        name: keyword
+        widget: string
+        hint: "Kata kunci SEO."
+
+      - label: "Konten Halaman Arsip"
+        name: body
+        widget: markdown
+        hint: "Konten teks atau tabel tarif pada halaman arsip."

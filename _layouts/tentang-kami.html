@@ -9,14 +9,7 @@
     <script custom-element="amp-sidebar" async src="https://cdn.ampproject.org/v0/amp-sidebar-0.1.js"></script>
     <script async custom-element="amp-lightbox-gallery" src="https://cdn.ampproject.org/v0/amp-lightbox-gallery-0.1.js"></script>
     <script src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js" async="async" custom-element="amp-carousel"></script>
-    <script src="https://cdn.ampproject.org/v0/amp-selector-0.1.js" async="async" custom-element="amp-selector"></script>
-    <script src="https://cdn.ampproject.org/v0/amp-accordion-0.1.js" async="async" custom-element="amp-accordion"></script>
-    <script src="https://cdn.ampproject.org/v0/amp-lightbox-0.1.js" async="async" custom-element="amp-lightbox"></script>
-    <script src="https://cdn.ampproject.org/v0/amp-bind-0.1.js" async="async" custom-element="amp-bind"></script>
-    <script src="https://cdn.ampproject.org/v0/amp-list-0.1.js" async="async" custom-element="amp-list"></script>
-    <script src="https://cdn.ampproject.org/v0/amp-mustache-0.2.js" async="async" custom-template="amp-mustache"></script>
     <script async custom-element="amp-install-serviceworker" src="https://cdn.ampproject.org/v0/amp-install-serviceworker-0.1.js"></script>
-    <script async custom-element="amp-facebook-like" src="https://cdn.ampproject.org/v0/amp-facebook-like-0.1.js"></script>
     <script async custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js"></script>
     <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
     <style amp-custom>﻿
@@ -44,9 +37,9 @@
     {% include header.html %}
     {% include slider.html %}
     <main class="home-page">
+        <!-- Breadcrumb & Hero Header -->
         <section class="card user-reviews padding-small-b">
             <h1 class="heading">{{ page.title }}</h1>
-            <!-- breadcrumb Start -->
             <script type="application/ld+json">
                 {
                   "@context": "https://schema.org/", 
@@ -68,53 +61,115 @@
                 <li><a href="/" title="Home">Home</a></li>
                 <li class="active"><a href="/tentang-kami/" title="{{ page.title }}">{{ page.title }}</a></li>
             </ul>
-            <!-- breadcrumb End -->
-            <br>
-            <ul class="listing basic-listing-card">
-                <div class="row">
-                    <div class="card">
-                        <div class="fixed-height-container">
-                            <amp-img class="contain" src="{{ page.image }}" alt="{{ page.title }}" title="{{ page.title }}" layout="fill"></amp-img>
+
+            <!-- Hero 2-Kolom Berdampingan di PC, Stack Rapi di Mobile -->
+            <div class="about-hero-grid">
+                <!-- Kolom Kiri: Gambar Representatif Layanan & Badge -->
+                <div class="about-hero-col-image">
+                    <div class="about-image-card">
+                        <amp-img src="{{ page.image }}" alt="{{ page.title }}" title="{{ page.title }}" width="16" height="10" layout="responsive" lightbox></amp-img>
+                        <div class="about-image-badge">
+                            <i>★</i>
+                            <span>{{ page.motto-badge | default: "”Customer Satisfaction is Our Goal“ — Komitmen Mutu Layanan Safa Jaya Trans" }}</span>
                         </div>
                     </div>
                 </div>
-            </ul>
+
+                <!-- Kolom Kanan: Identitas & Poin Layanan Utama -->
+                <div class="about-hero-col-intro">
+                    <div class="about-intro-card">
+                        <div>
+                            <span class="about-tag">{{ page.tag-hero | default: "Mitra Perjalanan Anda" }}</span>
+                            <h2 class="about-intro-title">{{ page.judul-hero | default: "Solusi Rental & Sewa Mobil Profesional di Surabaya" }}</h2>
+                            <p class="about-intro-desc">
+                                {{ page.deskripsi-hero | default: "Safa Jaya Trans hadir memberikan kemudahan transportasi sewa mobil terpercaya di Surabaya untuk kebutuhan wisata keluarga, kunjungan dinas, pernikahan, antar-jemput bandara Juanda, hingga perjalanan dinas luar kota Jawa Timur." }}
+                            </p>
+                            <ul class="about-checklist">
+                                <li><span class="check-icon">✓</span> {{ page.checklist-1 | default: "Armada Terbaru, Bersih, Wangi & Steril Terawat" }}</li>
+                                <li><span class="check-icon">✓</span> {{ page.checklist-2 | default: "Driver Berpengalaman, Ramah, Sopan & Hafal Rute" }}</li>
+                                <li><span class="check-icon">✓</span> {{ page.checklist-3 | default: "Tepat Waktu dengan Layanan Customer Service 24 Jam" }}</li>
+                                <li><span class="check-icon">✓</span> {{ page.checklist-4 | default: "Harga Transparan Tanpa Biaya Tersembunyi" }}</li>
+                            </ul>
+                        </div>
+                        <div class="about-cta-group">
+                            <a class="about-btn-wa" href="https://api.whatsapp.com/send?text=Halo%20{{ site.company }},%20saya%20ingin%20konsultasi%20sewa%20mobil%20di%20Surabaya&phone={{ site.telephone }}"><i class="icon-whatsapp"></i> Chat WhatsApp CS</a>
+                            <a class="about-btn-phone" href="tel:+{{ site.telephone }}"><i class="icon-phone"></i> {{ site.telephone-detail }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4 Feature Value Proposition Cards -->
+            <div class="about-features-grid">
+                <div class="about-feature-card">
+                    <span class="about-feature-icon">🚗</span>
+                    <h3 class="about-feature-title">{{ page.fitur-1-judul | default: "12+ Pilihan Armada" }}</h3>
+                    <p class="about-feature-desc">{{ page.fitur-1-deskripsi | default: "Mulai dari City Car, MPV Keluarga (Avanza, Xenia, Innova), hingga Luxury Alphard & Microbus HiAce." }}</p>
+                </div>
+                <div class="about-feature-card">
+                    <span class="about-feature-icon">👨‍✈️</span>
+                    <h3 class="about-feature-title">{{ page.fitur-2-judul | default: "Driver Profesional" }}</h3>
+                    <p class="about-feature-desc">{{ page.fitur-2-deskripsi | default: "Sopir bersertifikasi, ramah, berpakaian rapi, serta menguasai jalur tercepat dan lokasi wisata." }}</p>
+                </div>
+                <div class="about-feature-card">
+                    <span class="about-feature-icon">⏱️</span>
+                    <h3 class="about-feature-title">{{ page.fitur-3-judul | default: "Layanan Siap 24 Jam" }}</h3>
+                    <p class="about-feature-desc">{{ page.fitur-3-deskripsi | default: "Fleksibilitas reservasi dan layanan tanggap darurat kapan pun Anda membutuhkan armada." }}</p>
+                </div>
+                <div class="about-feature-card">
+                    <span class="about-feature-icon">💎</span>
+                    <h3 class="about-feature-title">{{ page.fitur-4-judul | default: "Tarif Bersahabat" }}</h3>
+                    <p class="about-feature-desc">{{ page.fitur-4-deskripsi | default: "Harga sewa bersaing mulai 200rb-an dengan rincian fasilitas transparan dan tanpa biaya siluman." }}</p>
+                </div>
+            </div>
         </section>
+
+        <!-- Social Share Bar & Google Review Terintegrasi -->
         <section class="card user-reviews padding-small-b">
-            <ul class="listing basic-listing-card">
-                <div class="card">
-                    <p>
-                        <i>Share on : </i>&nbsp;&nbsp;&nbsp;
-                        <a href="https://www.facebook.com/dialog/share?app_id={{ site.fb_app_id }}&display=popup&href={{ site.url }}{{ page.url }}" rel="noreferrer"><i class="icon-facebook"></i></a>
-                        &nbsp;&nbsp;&nbsp;
-                        <a href="https://twitter.com/intent/tweet?text={{ page.title }}%0A{{ page.description }}%0A{{ site.url }}{{ page.url }}"><i class="icon-twitter" rel="noreferrer"></i></a>
-                        &nbsp;&nbsp;&nbsp;
-                        <a href="https://api.whatsapp.com/send?phone=&text={{ page.title }}%0A{{ page.description }}%0A{{ site.url }}{{ page.url }}" rel="noreferrer"><i class="icon-whatsapp"></i></a>
-                    </p>
+            <div class="about-share-container">
+                <div class="about-share-links">
+                    <span>Bagikan Halaman Ini:</span>
+                    <a class="about-share-btn fb" href="https://www.facebook.com/dialog/share?app_id={{ site.fb_app_id }}&display=popup&href={{ site.url }}{{ page.url }}" rel="noreferrer" title="Bagikan ke Facebook"><i class="icon-facebook"></i></a>
+                    <a class="about-share-btn tw" href="https://twitter.com/intent/tweet?text={{ page.title }}%0A{{ page.description }}%0A{{ site.url }}{{ page.url }}" rel="noreferrer" title="Bagikan ke Twitter / X"><i class="icon-twitter"></i></a>
+                    <a class="about-share-btn wa" href="https://api.whatsapp.com/send?text={{ page.title }}%0A{{ site.url }}{{ page.url }}" rel="noreferrer" title="Bagikan via WhatsApp"><i class="icon-whatsapp"></i></a>
                 </div>
-                <div class="card">
-                    <amp-facebook-like width="110" height="20" layout="fixed" data-layout="button_count" data-href="{{ site.siteurl }}{{ page.url }}">
-                    </amp-facebook-like>
-                </div>
-                <div class="card">
-                    <a title="Klik disini untuk ulas kami di Google" href="https://search.google.com/local/writereview?placeid=ChIJSdI5tmb71y0RHq1F_d2DJc0" rel="noreferrer">Klik disini untuk ulas kami di Google</a>
-                </div>
-            </ul>
+                <a class="about-google-review-btn" href="https://search.google.com/local/writereview?placeid=ChIJSdI5tmb71y0RHq1F_d2DJc0" rel="noreferrer" title="Beri Rating di Google Maps">
+                    <i class="icon-star-full"></i> Ulas Kami di Google Maps
+                </a>
+            </div>
         </section>
+
+        <!-- Konten Profil & Sambutan Lengkap (Artikel Rapi) -->
         <section class="card user-reviews padding-small-b">
-            <ul class="listing basic-listing-card">
-                <p class="text-heading gr-mrgn-t">
-                    {{ content }}
-                </p>
-            </ul>
+            <div class="about-article-card">
+                {{ content }}
+
+                <!-- Kotak Sambutan CEO Mas Agus -->
+                <div class="about-ceo-card">
+                    <div class="about-ceo-quote">
+                        {{ page.ceo-quote | default: "”Customer Satisfaction is Our Goal“" }}
+                    </div>
+                    <div class="about-ceo-text">
+                        "{{ page.ceo-pesan | default: 'Website ini kami hadirkan sebagai sarana komunikasi dan kemudahan akses informasi bagi seluruh konsumen dan calon pelanggan Safa Jaya Trans di seluruh Indonesia. Layanan terbaik, kualitas armada prima, diskon maksimal, respon cepat 24 jam, dan integritas tinggi akan selalu menjadi landasan utama kami dalam melayani Anda. Terima kasih atas kepercayaan Anda memilih Safa Jaya Trans sebagai mitra transportasi di Surabaya.' }}"
+                    </div>
+                    <div class="about-ceo-sign">
+                        <div class="about-ceo-avatar">{{ page.ceo-nama | slice: 0, 1 | default: "A" }}</div>
+                        <div class="about-ceo-info">
+                            <h4>{{ page.ceo-nama | default: "Mas Agus" }}</h4>
+                            <span>{{ page.ceo-jabatan | default: "CEO & Founder safajaya.com" }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
+
+        <!-- Info Tentang Kami / Artikel Terkait -->
         <section class="card user-reviews padding-small-b" id="info-tentang-kami">
             <ul class="listing basic-listing-card">
-                <!--Info Terbaru-->
                 <li class="card cr-popular">
-                    <h2>Info Tentang Kami</h2>
+                    <h2>Artikel &amp; Informasi Terkait</h2>
                     <ul>
-                        <amp-carousel height="400" type="carousel" controls>
+                        <amp-carousel height="380" type="carousel" controls>
                             {% for item in site.data-artikel %}
                             <li class="card">
                                 <a href="{{ item.url }}" title="{{ item.title-h1 }}">
@@ -130,10 +185,11 @@
                             {% endfor %}
                         </amp-carousel>
                     </ul>
-                    <a class="cta-arrow" href="/tentang-kami/#info-tentang-kami" title="Lihat Semua Info Terbaru">Lihat Semua Info Tentang Kami</a>
+                    <a class="cta-arrow" href="/tentang-kami/#info-tentang-kami" title="Lihat Semua Info">Lihat Semua Info &amp; Artikel</a>
                 </li>
             </ul>
         </section>
+
         {% include produk-lain.html %}
         {% include client-review.html %}
     </main>

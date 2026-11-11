@@ -4,84 +4,448 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Admin — SAFA JAYA TRANS CMS</title>
+  <title>Adarent CMS — Safajaya Trans</title>
+  <link rel="icon" type="image/png" href="https://cloud.klikada.com/image/klikada-logo-lingkaran.png" />
+  <link rel="apple-touch-icon" href="https://cloud.klikada.com/image/klikada-logo-lingkaran.png" />
+  <meta name="application-name" content="Adarent CMS" />
+  <meta name="theme-color" content="#1e3a8a" />
+
   <style>
-    #cms-loading {
+    /* Reset & Base Styles */
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+
+    /* Loading Screen Adarent CMS */
+    #adarent-loading {
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      font-family: sans-serif;
-      color: #555;
-      background: #f5f5f5;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #0f172a 100%);
+      color: #ffffff;
+      padding: 24px;
+      text-align: center;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
     }
-    #cms-loading h2 { margin: 0 0 8px; font-size: 1.2rem; }
-    #cms-loading p  { margin: 0; font-size: 0.9rem; color: #888; }
-    #cms-error {
+
+    .adarent-loading-card {
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 40px 32px 32px 32px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .adarent-logo-wrap {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: #ffffff;
+      padding: 4px;
+      box-shadow: 0 10px 30px rgba(37, 99, 235, 0.45);
+      margin-bottom: 20px;
+      animation: adarentPulse 2s infinite ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .adarent-logo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+    }
+
+    .adarent-brand-title {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin: 0 0 6px 0;
+      color: #ffffff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .adarent-badge {
+      display: inline-block;
+      padding: 4px 14px;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+    }
+
+    .adarent-subtitle {
+      font-size: 14px;
+      color: #94a3b8;
+      margin: 0 0 24px 0;
+      line-height: 1.5;
+    }
+
+    /* Modern Spinner */
+    .adarent-spinner {
+      width: 38px;
+      height: 38px;
+      border: 3.5px solid rgba(255, 255, 255, 0.15);
+      border-top-color: #38bdf8;
+      border-radius: 50%;
+      animation: adarentSpin 0.9s linear infinite;
+      margin-bottom: 16px;
+    }
+
+    .adarent-status-text {
+      font-size: 13.5px;
+      color: #cbd5e1;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .adarent-footer-tag {
+      margin-top: 24px;
+      font-size: 11.5px;
+      color: #64748b;
+      letter-spacing: 0.3px;
+    }
+
+    @keyframes adarentSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes adarentPulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 10px 30px rgba(37, 99, 235, 0.4); }
+      50% { transform: scale(1.04); box-shadow: 0 14px 40px rgba(56, 189, 248, 0.6); }
+    }
+
+    /* Error Screen */
+    #adarent-error {
+      position: fixed;
+      inset: 0;
+      z-index: 999998;
       display: none;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      font-family: sans-serif;
-      color: #c00;
-      background: #fff5f5;
-      padding: 2rem;
+      background: linear-gradient(135deg, #0f172a 0%, #1e1e38 100%);
+      color: #ffffff;
+      padding: 24px;
       text-align: center;
     }
-    #cms-error h2 { margin: 0 0 12px; }
-    #cms-error code { background: #eee; padding: 2px 6px; border-radius: 4px; }
+
+    .adarent-error-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 20px;
+      padding: 36px 28px;
+      max-width: 420px;
+      width: 100%;
+    }
+
+    .adarent-retry-btn {
+      margin-top: 20px;
+      padding: 10px 24px;
+      background: #2563eb;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .adarent-retry-btn:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+
+    /* Branding Overrides untuk Antarmuka Admin CMS */
+    /* 1. Sembunyikan label pihak ketiga, tombol Sign In with GitHub, & Local Repo */
+    a[href*="sveltiacms.app"],
+    footer a[href*="sveltia"],
+    [class*="powered-by"],
+    [data-testid="powered-by"],
+    button[aria-label*="GitHub"],
+    button[aria-label*="github"],
+    dialog .divider,
+    dialog [role="separator"],
+    dialog [class*="divider"],
+    [data-testid="local-repo-section"],
+    [class*="local-repo"] {
+      display: none !important;
+    }
+
+    /* 2. Logo Header & Dialog Bulat Proporsional */
+    header img,
+    header [class*="logo"] img,
+    dialog img[src*="klikada"] {
+      border-radius: 50% !important;
+      object-fit: cover !important;
+      aspect-ratio: 1 / 1 !important;
+    }
+
+    /* 3. Tampilan Login Modal yang Elegan */
+    dialog[open] {
+      border-radius: 16px !important;
+      box-shadow: 0 25px 60px rgba(15, 23, 42, 0.35) !important;
+      border: 1px solid #e2e8f0 !important;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Loading indicator ditampilkan sebelum CMS siap -->
-  <div id="cms-loading">
-    <h2>⏳ Memuat Sveltia CMS…</h2>
-    <p>Pastikan browser Anda terhubung ke internet.</p>
+  <!-- Loading Screen Adarent CMS -->
+  <div id="adarent-loading">
+    <div class="adarent-loading-card">
+      <div class="adarent-logo-wrap">
+        <img src="https://cloud.klikada.com/image/klikada-logo-lingkaran.png" alt="Adarent CMS" />
+      </div>
+      <h1 class="adarent-brand-title">Adarent CMS</h1>
+      <span class="adarent-badge">Sistem Manajemen Rental</span>
+      <p class="adarent-subtitle">Safajaya Trans • Armada & Konten</p>
+      <div class="adarent-spinner"></div>
+      <p class="adarent-status-text">Menyiapkan antarmuka Adarent CMS…</p>
+      <div class="adarent-footer-tag">Adarent CMS &copy; 2026 • Powered by klikada.com</div>
+    </div>
   </div>
 
-  <!-- Pesan error jika script gagal dimuat -->
-  <div id="cms-error">
-    <h2>❌ Gagal memuat CMS</h2>
-    <p>Script Sveltia CMS tidak dapat diunduh dari CDN.<br>
-    Pastikan koneksi internet aktif, lalu muat ulang halaman ini.</p>
-    <p style="margin-top:1rem">CDN: <code>releases.sveltiacms.app</code></p>
-    <button onclick="location.reload()" style="margin-top:1rem;padding:8px 20px;cursor:pointer">🔄 Muat Ulang</button>
+  <!-- Error Screen -->
+  <div id="adarent-error">
+    <div class="adarent-error-card">
+      <div style="font-size: 48px; margin-bottom: 12px;">⚠️</div>
+      <h2 style="margin: 0 0 10px 0; font-size: 20px;">Gagal Memuat Adarent CMS</h2>
+      <p style="font-size: 14px; color: #cbd5e1; margin: 0 0 16px 0; line-height: 1.6;">
+        Koneksi ke server script terganggu.<br>Pastikan koneksi internet Anda aktif, lalu coba muat ulang halaman.
+      </p>
+      <button class="adarent-retry-btn" onclick="location.reload()">🔄 Muat Ulang Halaman</button>
+    </div>
   </div>
 
-  <!-- Sveltia CMS — primary CDN -->
+  <!-- Inisialisasi Script Adarent CMS (Multi-CDN Resilient Loader) -->
   <script>
     (function() {
-      var s = document.createElement('script');
-      s.src = 'https://releases.sveltiacms.app/sveltia-cms/latest/sveltia-cms.js';
-      s.onload = function() {
-        document.getElementById('cms-loading').style.display = 'none';
-      };
-      s.onerror = function() {
-        // Fallback: coba jsDelivr mirror
-        var s2 = document.createElement('script');
-        s2.src = 'https://cdn.jsdelivr.net/npm/@sveltia/cms@latest/dist/sveltia-cms.js';
-        s2.onload = function() {
-          document.getElementById('cms-loading').style.display = 'none';
-        };
-        s2.onerror = function() {
-          document.getElementById('cms-loading').style.display = 'none';
-          document.getElementById('cms-error').style.display = 'flex';
-        };
-        document.head.appendChild(s2);
-      };
-      document.head.appendChild(s);
+      var cdnList = [
+        'https://cdn.jsdelivr.net/npm/@sveltia/cms@latest/dist/sveltia-cms.js',
+        'https://unpkg.com/@sveltia/cms@latest/dist/sveltia-cms.js',
+        'https://releases.sveltiacms.app/sveltia-cms/latest/sveltia-cms.js'
+      ];
+      var cdnIndex = 0;
 
-      // Sembunyikan loading setelah 10 detik (CMS sudah render sendiri)
-      setTimeout(function() {
-        var el = document.getElementById('cms-loading');
-        if (el) el.style.display = 'none';
-      }, 10000);
+      function hideLoader() {
+        var el = document.getElementById('adarent-loading');
+        if (el) {
+          el.style.opacity = '0';
+          setTimeout(function() { el.style.display = 'none'; }, 400);
+        }
+      }
+
+      function showError() {
+        var loader = document.getElementById('adarent-loading');
+        if (loader) loader.style.display = 'none';
+        var err = document.getElementById('adarent-error');
+        if (err) err.style.display = 'flex';
+      }
+
+      function loadScript(src) {
+        var s = document.createElement('script');
+        s.src = src;
+        s.onload = function() {
+          // Script berhasil dimuat
+          setTimeout(hideLoader, 600);
+          initAdarentBrandingEnforcer();
+        };
+        s.onerror = function() {
+          cdnIndex++;
+          if (cdnIndex < cdnList.length) {
+            loadScript(cdnList[cdnIndex]);
+          } else {
+            showError();
+          }
+        };
+        document.head.appendChild(s);
+      }
+
+      // Mulai memuat script dari CDN pertama
+      loadScript(cdnList[0]);
+
+      // Fallback timer: sembunyikan loader setelah 12 detik agar tidak menghalangi jika CMS sudah render
+      setTimeout(hideLoader, 12000);
+
+      // Adarent CMS Branding Enforcer (mengamankan branding nama & logo)
+      function initAdarentBrandingEnforcer() {
+        // 1. Pastikan title tab browser selalu Adarent CMS
+        function enforceTitle() {
+          if (!document.title.includes('Adarent CMS')) {
+            document.title = 'Adarent CMS — Safajaya Trans';
+          }
+        }
+        enforceTitle();
+
+        // 2. Hilangkan 'Sign In with GitHub', 'Work with Local Repository', teks direktori, dan arahkan ke Login Kunci Akses Adarent
+        function enforceAdarentLogin() {
+          enforceTitle();
+
+          // Sembunyikan divider 'or' / pemisah
+          var dividers = document.querySelectorAll('dialog .divider, dialog [role="separator"], dialog [class*="divider"]');
+          dividers.forEach(function(div) {
+            div.style.setProperty('display', 'none', 'important');
+          });
+
+          // Sembunyikan teks instruksi repositori lokal ("Once prompted, select the root directory...")
+          var allDialogTexts = document.querySelectorAll('dialog p, dialog span, dialog div, dialog h3, dialog section, dialog label');
+          allDialogTexts.forEach(function(el) {
+            var raw = el.innerText || el.textContent || '';
+            var txt = raw.toLowerCase();
+            if (
+              txt.includes('once prompted') ||
+              txt.includes('select the root directory') ||
+              txt.includes('root directory') ||
+              txt.includes('work with local repository') ||
+              (txt.includes('rentcarsafajaya.github.io') && (txt.includes('repository') || txt.includes('prompted')))
+            ) {
+              el.style.setProperty('display', 'none', 'important');
+              // Sembunyikan container description jika membungkus instruksi ini
+              var descWrap = el.closest('.description') || el.closest('[class*="local"]');
+              if (descWrap) {
+                descWrap.style.setProperty('display', 'none', 'important');
+              }
+            }
+          });
+
+          // Saring dan sembunyikan semua tombol yang merujuk ke GitHub dan Local Repository
+          var allButtons = document.querySelectorAll('button');
+          allButtons.forEach(function(btn) {
+            var text = (btn.innerText || '').toLowerCase();
+            var html = (btn.innerHTML || '').toLowerCase();
+            var aria = (btn.getAttribute('aria-label') || '').toLowerCase();
+
+            // Sembunyikan tombol 'Work with Local Repository'
+            if (
+              text.includes('local repository') ||
+              html.includes('local repository') ||
+              aria.includes('local repository') ||
+              text.includes('work with local')
+            ) {
+              btn.style.setProperty('display', 'none', 'important');
+              var parentDesc = btn.closest('.description') || btn.closest('[class*="local"]');
+              if (parentDesc) {
+                parentDesc.style.setProperty('display', 'none', 'important');
+              }
+            }
+
+            // Sembunyikan tombol 'Sign in with GitHub'
+            if (text.includes('github') || html.includes('github') || aria.includes('github') || btn.querySelector('svg[class*="github"]')) {
+              btn.style.setProperty('display', 'none', 'important');
+            }
+
+            // Temukan opsi 'Sign In Using Access Token' / 'Gunakan token akses'
+            if (text.includes('access token') || text.includes('token akses') || text.includes('using access token')) {
+              btn.textContent = '🔑 Masuk dengan Kunci Akses Adarent';
+              btn.style.setProperty('display', 'inline-flex', 'important');
+              btn.style.background = '#2563eb';
+              btn.style.color = '#ffffff';
+              btn.style.fontWeight = '700';
+              btn.style.padding = '12px 24px';
+              btn.style.borderRadius = '8px';
+              btn.style.border = 'none';
+              btn.style.width = '100%';
+              btn.style.boxShadow = '0 4px 14px rgba(37, 99, 235, 0.35)';
+              btn.style.justifyContent = 'center';
+
+              // Otomatis klik tombol ini agar langsung menampilkan form input token tanpa harus klik manual
+              if (!btn.dataset.adarentAutoOpened) {
+                btn.dataset.adarentAutoOpened = 'true';
+                setTimeout(function() { btn.click(); }, 120);
+              }
+            }
+
+            // Tombol submit di dalam form token
+            if ((text === 'sign in' || text === 'masuk') && btn.closest('dialog')) {
+              btn.textContent = 'Masuk ke Adarent CMS';
+              btn.style.background = '#2563eb';
+              btn.style.color = '#ffffff';
+              btn.style.fontWeight = '700';
+              btn.style.borderRadius = '8px';
+            }
+          });
+
+          // Ganti instruksi atau teks yang menyebut GitHub di dalam modal login
+          var dialogs = document.querySelectorAll('dialog');
+          dialogs.forEach(function(dlg) {
+            var inputs = dlg.querySelectorAll('input');
+            inputs.forEach(function(inp) {
+              if (inp.type === 'text' || inp.type === 'password') {
+                inp.placeholder = 'Masukkan Kunci Akses / Token Admin…';
+              }
+            });
+
+            var texts = dlg.querySelectorAll('p, span, div, label');
+            texts.forEach(function(el) {
+              if (el.children.length === 0 && el.innerText) {
+                if (el.innerText.toLowerCase().includes('github')) {
+                  el.innerText = el.innerText.replace(/github/gi, 'Adarent Cloud');
+                }
+                if (el.innerText.toLowerCase().includes('personal access token')) {
+                  el.innerText = 'Silakan masukkan Kunci Akses Administrator Adarent CMS Anda:';
+                }
+              }
+            });
+          });
+
+          // Sembunyikan link powered-by jika muncul
+          var poweredLinks = document.querySelectorAll('a[href*="sveltiacms"], a[href*="decapcms"]');
+          for (var i = 0; i < poweredLinks.length; i++) {
+            var parent = poweredLinks[i].closest('footer') || poweredLinks[i].parentElement;
+            if (parent && parent.innerText && parent.innerText.toLowerCase().includes('powered by')) {
+              parent.style.setProperty('display', 'none', 'important');
+            } else {
+              poweredLinks[i].style.setProperty('display', 'none', 'important');
+            }
+          }
+
+          // Pastikan gambar logo berbentuk lingkaran
+          var logos = document.querySelectorAll('header img, [role="banner"] img, dialog img[src*="klikada"]');
+          for (var j = 0; j < logos.length; j++) {
+            logos[j].style.borderRadius = '50%';
+            logos[j].style.objectFit = 'cover';
+          }
+        }
+
+        // Jalankan berkala saat pertama kali load
+        var intervalId = setInterval(enforceAdarentLogin, 250);
+        setTimeout(function() { clearInterval(intervalId); }, 15000);
+
+        // Observer untuk menyaring teks dan menyisipkan branding Adarent CMS
+        var observer = new MutationObserver(function(mutations) {
+          enforceAdarentLogin();
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+      }
     })();
   </script>
 
 </body>
 </html>
-
