@@ -35,7 +35,18 @@
     </script>
     </amp-analytics>
     <!-- Google Tag (gtag.js) for Google Ads - AMP Compliant -->
-    <amp-analytics config="https://www.googletagmanager.com/amp.json?id=AW-17005499642" data-credentials="include"></amp-analytics>
+    <amp-analytics type="gtag" data-credentials="include">
+        <script type="application/json">
+        {
+          "vars": {
+            "gtag_id": "AW-17005499642",
+            "config": {
+              "AW-17005499642": { "groups": "default" }
+            }
+          }
+        }
+        </script>
+    </amp-analytics>
     <!-- Google Tag Manager - AMP Compliant -->
     <amp-analytics config="https://www.googletagmanager.com/amp.json?id=GTM-TN92XWRZ" data-credentials="include"></amp-analytics>
     {% include header.html %}
