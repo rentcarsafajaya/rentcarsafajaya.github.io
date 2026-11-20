@@ -77,7 +77,6 @@
       }]
     }
     </script>
-    <!-- AMP Analytics -->
     <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
 </head>
 
@@ -96,6 +95,21 @@
           }
         }
         </script>
+    </amp-analytics>
+    <amp-analytics type="googleanalytics" id="analytics-ga">
+      <script type="application/json">
+      {
+        "vars": {
+          "account": "{{ site.id_pelacakan_ga }}"
+        },
+        "triggers": {
+          "trackPageview": {
+            "on": "visible",
+            "request": "pageview"
+          }
+        }
+      }
+    </script>
     </amp-analytics>
     {% include header.html %}
     <main class="listing-page">
